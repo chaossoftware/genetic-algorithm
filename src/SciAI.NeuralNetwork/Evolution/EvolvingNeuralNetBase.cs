@@ -6,24 +6,25 @@ using System.Linq;
 
 namespace SciAI.NeuralNetwork.Evolution
 {
-    public abstract class EvolvingNetwork : ThreeLayerNetwork<TresholdNeuron, TresholdNeuron, TresholdNeuron, Synapse>
+    public abstract class EvolvingNeuralNetBase : NN3LayerBase<TresholdNeuron, TresholdNeuron, TresholdNeuron, Synapse>
     {
         private const double WeightsMutationInterval = 1;
         private const double NeuronParamsMutationInterval = 1;
 
-        protected int activationIterations = 1;
-
-        protected Random random = new Random();
-
-        protected EvolvingNetwork(int inputNeurons, int hiddenNeurons, int outputNeurons) : base(inputNeurons, hiddenNeurons, outputNeurons)
+        protected EvolvingNeuralNetBase(int inputNeurons, int hiddenNeurons, int outputNeurons) 
+            : base(inputNeurons, hiddenNeurons, outputNeurons)
         {
         }
 
-        public int NeuronsCount => this.InputLayer.Neurons.Length + this.HiddenLayer.Neurons.Length + this.OutputLayer.Neurons.Length;
+        public int NeuronsCount => InputLayer.Neurons.Length + HiddenLayer.Neurons.Length + OutputLayer.Neurons.Length;
+
+        protected Random Randomizer { get; } = new Random();
+
+        protected int ActivationIterations { get; set; } = 1;
 
         public List<double> GetWeightsOfSynapses()
         {
-            var weights = new List<double>();
+            List<double> weights = new List<double>();
 
             for (int i = 0; i < 2; i++)
             {
@@ -35,8 +36,8 @@ namespace SciAI.NeuralNetwork.Evolution
 
         public void SetWeightsOfSynapses(List<double> weights)
         {
-            var d1 = Connections[0].Count;
-            var d2 = Connections[1].Count;
+            int d1 = Connections[0].Count;
+            int d2 = Connections[1].Count;
 
             for (int i = 0; i < d1; i++)
             {
@@ -51,71 +52,71 @@ namespace SciAI.NeuralNetwork.Evolution
 
         public TresholdNeuron GetNeuron(int index)
         {
-            int inputs = this.InputLayer.Neurons.Length;
-            int hidden = this.HiddenLayer.Neurons.Length;
+            int inputs = InputLayer.Neurons.Length;
+            int hidden = HiddenLayer.Neurons.Length;
 
             if (index < inputs)
             {
-                return this.InputLayer.Neurons[index];
+                return InputLayer.Neurons[index];
             }
-            else if (index < inputs + this.HiddenLayer.Neurons.Length)
+            else if (index < inputs + HiddenLayer.Neurons.Length)
             {
-                return this.HiddenLayer.Neurons[index - inputs];
+                return HiddenLayer.Neurons[index - inputs];
             }
             else
             {
-                return this.OutputLayer.Neurons[index - inputs - hidden];
+                return OutputLayer.Neurons[index - inputs - hidden];
             }
         }
 
         public void SetNeuron(int index, TresholdNeuron neuron)
         {
-            int inputs = this.InputLayer.Neurons.Length;
-            int hidden = this.HiddenLayer.Neurons.Length;
+            int inputs = InputLayer.Neurons.Length;
+            int hidden = HiddenLayer.Neurons.Length;
 
             if (index < inputs)
             {
-                this.InputLayer.Neurons[index] = neuron;
+                InputLayer.Neurons[index] = neuron;
             }
-            else if (index < inputs + this.HiddenLayer.Neurons.Length)
+            else if (index < inputs + HiddenLayer.Neurons.Length)
             {
-                this.HiddenLayer.Neurons[index - inputs] = neuron;
+                HiddenLayer.Neurons[index - inputs] = neuron;
             }
             else
             {
-                this.OutputLayer.Neurons[index - inputs - hidden] = neuron;
+                OutputLayer.Neurons[index - inputs - hidden] = neuron;
             }
         }
 
         public override void Process()
         {
-            this.InputLayer.Process();
-            this.HiddenLayer.Process();
-            this.OutputLayer.Process();
+            InputLayer.Process();
+            HiddenLayer.Process();
+            OutputLayer.Process();
         }
 
-        public List<T> RandomCrossover<T>(T anotherChromosome) where T : EvolvingNetwork
+        public List<T> RandomCrossover<T>(T anotherChromosome) where T : EvolvingNeuralNetBase
         {
-            T thisClone = this.Clone() as T;
+            T thisClone = Clone() as T;
             T anotherClone = anotherChromosome.Clone() as T;
 
-            switch (this.random.Next(3))
+            switch (Randomizer.Next(3))
             {
                 case 0:
-                    this.TwoPointsWeightsCrossover(thisClone, anotherClone);
+                    TwoPointsWeightsCrossover(thisClone, anotherClone);
                     break;
                 case 1:
-                    this.UniformelyDistributedWeightsCrossover(thisClone, anotherClone);
+                    UniformelyDistributedWeightsCrossover(thisClone, anotherClone);
                     break;
                 case 2:
-                    this.TwoPointsNeuronsCrossover(thisClone, anotherClone);
+                    TwoPointsNeuronsCrossover(thisClone, anotherClone);
                     break;
                 case 3:
-                    this.UniformelyDistributedNeuronsCrossover(thisClone, anotherClone);
+                    UniformelyDistributedNeuronsCrossover(thisClone, anotherClone);
                     break;
             }
 
-            var offsprings = new List<T>();
+            List<T> offsprings = new List<T>();
 
             offsprings.Add(anotherClone);
             offsprings.Add(thisClone);
@@ -125,23 +126,23 @@ namespace SciAI.NeuralNetwork.Evolution
             return offsprings;
         }
 
-        public T RandomMutate<T>() where T : EvolvingNetwork
+        public T RandomMutate<T>() where T : EvolvingNeuralNetBase
         {
-            T mutatedBrain = this.Clone() as T;
+            T mutatedBrain = Clone() as T;
 
-            switch (this.random.Next(4))
+            switch (Randomizer.Next(4))
             {
                 case 0:
-                    this.MutateWeights(mutatedBrain);
+                    MutateWeights(mutatedBrain);
                     break;
                 case 1:
-                    this.MutateNeuronsFunctionsParams(mutatedBrain);
+                    MutateNeuronsFunctionsParams(mutatedBrain);
                     break;
                 case 2:
-                    this.MutateChangeNeuronsFunctions(mutatedBrain);
+                    MutateChangeNeuronsFunctions(mutatedBrain);
                     break;
                 case 3:
-                    this.ShuffleWeightsOnSubinterval(mutatedBrain);
+                    ShuffleWeightsOnSubinterval(mutatedBrain);
                     break;
             }
 
@@ -150,42 +151,42 @@ namespace SciAI.NeuralNetwork.Evolution
 
         #region "Mutation techniques"
 
-        protected void MutateWeights<T>(T mutated) where T : EvolvingNetwork
+        protected void MutateWeights<T>(T mutated) where T : EvolvingNeuralNetBase
         {
-            var weights = mutated.GetWeightsOfSynapses();
+            List<double> weights = mutated.GetWeightsOfSynapses();
 
             int currentIndex;
             int weightsSize = weights.Count;
-            int iterations = this.random.Next(1, weightsSize);
-            var used = new HashSet<int>();
+            int iterations = Randomizer.Next(1, weightsSize);
+            HashSet<int> used = new HashSet<int>();
 
             for (int i = 0; i < iterations; i++)
             {
                 do
                 {
-                    currentIndex = this.random.Next(weightsSize);
+                    currentIndex = Randomizer.Next(weightsSize);
                 }
                 while (used.Contains(currentIndex));
 
-                weights[currentIndex] += (this.Gauss2() - this.Gauss2()) * WeightsMutationInterval;
+                weights[currentIndex] += (Gauss2() - Gauss2()) * WeightsMutationInterval;
                 used.Add(currentIndex);
             }
 
             mutated.SetWeightsOfSynapses(weights);
         }
 
-        protected void MutateNeuronsFunctionsParams<T>(T mutated) where T : EvolvingNetwork
+        protected void MutateNeuronsFunctionsParams<T>(T mutated) where T : EvolvingNeuralNetBase
         {
             int currentIndex;
             int neuronsSize = mutated.NeuronsCount;
-            int iterations = this.random.Next(1, neuronsSize);
-            var used = new HashSet<int>();
+            int iterations = Randomizer.Next(1, neuronsSize);
+            HashSet<int> used = new HashSet<int>();
 
             for (int i = 0; i < iterations; i++)
             {
                 do
                 {
-                    currentIndex = this.random.Next(neuronsSize);
+                    currentIndex = Randomizer.Next(neuronsSize);
                 }
                 while (used.Contains(currentIndex));
 
@@ -195,7 +196,7 @@ namespace SciAI.NeuralNetwork.Evolution
 
                 for (int j = 0; j < parameters.Count; j++)
                 {
-                    parameters[j] += (this.Gauss2() - this.Gauss2()) * NeuronParamsMutationInterval;
+                    parameters[j] += (Gauss2() - Gauss2()) * NeuronParamsMutationInterval;
                 }
 
                 n.SetFunctionAndParams(n.TresholdFunction, parameters);
@@ -203,18 +204,18 @@ namespace SciAI.NeuralNetwork.Evolution
             }
         }
 
-        protected void MutateChangeNeuronsFunctions<T>(T mutated) where T : EvolvingNetwork
+        protected void MutateChangeNeuronsFunctions<T>(T mutated) where T : EvolvingNeuralNetBase
         {
             int currentIndex;
             int neuronsSize = mutated.NeuronsCount;
-            int iterations = this.random.Next(1, neuronsSize);
-            var used = new HashSet<int>();
+            int iterations = Randomizer.Next(1, neuronsSize);
+            HashSet<int> used = new HashSet<int>();
 
             for (int i = 0; i < iterations; i++)
             {
                 do
                 {
-                    currentIndex = this.random.Next(neuronsSize);
+                    currentIndex = Randomizer.Next(neuronsSize);
                 }
                 while (used.Contains(currentIndex));
 
@@ -226,12 +227,12 @@ namespace SciAI.NeuralNetwork.Evolution
             }
         }
 
-        protected void ShuffleWeightsOnSubinterval<T>(T mutated) where T : EvolvingNetwork
+        protected void ShuffleWeightsOnSubinterval<T>(T mutated) where T : EvolvingNeuralNetBase
         {
             List<double> weights = mutated.GetWeightsOfSynapses();
 
-            int left = this.random.Next(weights.Count);
-            int right = this.random.Next(weights.Count);
+            int left = Randomizer.Next(weights.Count);
+            int right = Randomizer.Next(weights.Count);
 
             if (left > right)
             {
@@ -247,7 +248,7 @@ namespace SciAI.NeuralNetwork.Evolution
                 subListOfWeights.Add(weights[left + i]);
             }
 
-            subListOfWeights = subListOfWeights.OrderBy(item => this.random.Next()).ToList(); //shuffle
+            subListOfWeights = subListOfWeights.OrderBy(item => Randomizer.Next()).ToList(); //shuffle
 
             for (int i = 0; i < ((right - left) + 1); i++)
             {
@@ -261,13 +262,13 @@ namespace SciAI.NeuralNetwork.Evolution
 
         #region "Crossover techniques"
 
-        protected void TwoPointsWeightsCrossover<T>(T thisClone, T anotherClone) where T : EvolvingNetwork
+        protected void TwoPointsWeightsCrossover<T>(T thisClone, T anotherClone) where T : EvolvingNeuralNetBase
         {
             List<double> thisWeights = thisClone.GetWeightsOfSynapses();
             List<double> anotherWeights = anotherClone.GetWeightsOfSynapses();
 
-            int left = this.random.Next(thisWeights.Count);
-            int right = this.random.Next(thisWeights.Count);
+            int left = Randomizer.Next(thisWeights.Count);
+            int right = Randomizer.Next(thisWeights.Count);
 
             if (left > right)
             {
@@ -287,21 +288,21 @@ namespace SciAI.NeuralNetwork.Evolution
             anotherClone.SetWeightsOfSynapses(anotherWeights);
         }
 
-        protected void UniformelyDistributedWeightsCrossover<T>(T thisClone, T anotherClone) where T : EvolvingNetwork
+        protected void UniformelyDistributedWeightsCrossover<T>(T thisClone, T anotherClone) where T : EvolvingNeuralNetBase
         {
             List<double> thisWeights = thisClone.GetWeightsOfSynapses();
             List<double> anotherWeights = anotherClone.GetWeightsOfSynapses();
 
             int currentIndex;
             int weightsSize = thisWeights.Count;
-            int iterations = this.random.Next(1, weightsSize);
+            int iterations = Randomizer.Next(1, weightsSize);
             var used = new HashSet<int>();
 
             for (int i = 0; i < iterations; i++)
             {
                 do
                 {
-                    currentIndex = this.random.Next(weightsSize);
+                    currentIndex = Randomizer.Next(weightsSize);
                 }
                 while (used.Contains(currentIndex));
 
@@ -317,11 +318,11 @@ namespace SciAI.NeuralNetwork.Evolution
             anotherClone.SetWeightsOfSynapses(anotherWeights);
         }
 
-        protected void TwoPointsNeuronsCrossover<T>(T thisClone, T anotherClone) where T : EvolvingNetwork
+        protected void TwoPointsNeuronsCrossover<T>(T thisClone, T anotherClone) where T : EvolvingNeuralNetBase
         {
             int neuronsSize = thisClone.NeuronsCount;
-            int left = this.random.Next(neuronsSize);
-            int right = this.random.Next(neuronsSize);
+            int left = Randomizer.Next(neuronsSize);
+            int right = Randomizer.Next(neuronsSize);
 
             if (left > right)
             {
@@ -338,18 +339,18 @@ namespace SciAI.NeuralNetwork.Evolution
             }
         }
 
-        protected void UniformelyDistributedNeuronsCrossover<T>(T thisClone, T anotherClone) where T : EvolvingNetwork
+        protected void UniformelyDistributedNeuronsCrossover<T>(T thisClone, T anotherClone) where T : EvolvingNeuralNetBase
         {
             int currentIndex;
             int neuronsSize = thisClone.NeuronsCount;
-            int iterations = this.random.Next(1, neuronsSize);
+            int iterations = Randomizer.Next(1, neuronsSize);
             var used = new HashSet<int>();
 
             for (int i = 0; i < iterations; i++)
             {
                 do
                 {
-                    currentIndex = this.random.Next(neuronsSize);
+                    currentIndex = Randomizer.Next(neuronsSize);
                 }
                 while (used.Contains(currentIndex));
 
@@ -368,8 +369,8 @@ namespace SciAI.NeuralNetwork.Evolution
 
             do
             {
-                v1 = 2d * random.NextDouble() - 1d;
-                v2 = 2d * random.NextDouble() - 1d;
+                v1 = 2d * Randomizer.NextDouble() - 1d;
+                v2 = 2d * Randomizer.NextDouble() - 1d;
                 arg = v1 * v1 + v2 * v2;
             }
             while (arg >= 1d || arg == 0d);

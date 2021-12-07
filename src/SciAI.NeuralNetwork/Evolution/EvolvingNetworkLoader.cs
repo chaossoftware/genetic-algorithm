@@ -8,7 +8,7 @@ namespace SciAI.NeuralNetwork.Evolution
 {
     public static class EvolvingNetworkLoader
     {
-        public static void ToFile<T>(T network, string fileName) where T : EvolvingNetwork
+        public static void ToFile<T>(T network, string fileName) where T : EvolvingNeuralNetBase
         {
             var root = new XElement(typeof(T).Name);
 
@@ -48,7 +48,7 @@ namespace SciAI.NeuralNetwork.Evolution
             new XDocument(root).Save(fileName);
         }
 
-        public static T FromFile<T>(string fileName) where T : EvolvingNetwork
+        public static T FromFile<T>(string fileName) where T : EvolvingNeuralNetBase
         {
             var network = Activator.CreateInstance<T>();
             var root = XDocument.Load(fileName).Element(typeof(T).Name);
