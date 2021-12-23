@@ -30,7 +30,7 @@ namespace SciML.NeuralNetwork.Base
 
         public virtual object Clone()
         {
-            var synapseCopy = new Synapse(InIndex, OutIndex)
+            Synapse synapseCopy = new Synapse(InIndex, OutIndex)
             {
                 Weight = Weight,
                 Signal = Signal,

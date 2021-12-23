@@ -10,33 +10,33 @@ namespace SciML.NeuralNetwork.Evolution
     {
         public static void ToFile<T>(T network, string fileName) where T : EvolvingNeuralNetBase
         {
-            var root = new XElement(typeof(T).Name);
+            XElement root = new XElement(typeof(T).Name);
 
-            var inputLayerElement = new XElement("InputLayer");
+            XElement inputLayerElement = new XElement("InputLayer");
 
-            foreach (var neuron in network.InputLayer.Neurons)
+            foreach (TresholdNeuron neuron in network.InputLayer.Neurons)
             {
                 inputLayerElement.Add(StoreNeuron(neuron));
             }
 
-            var hiddenLayerElement = new XElement("HiddenLayer");
+            XElement hiddenLayerElement = new XElement("HiddenLayer");
 
-            foreach (var neuron in network.HiddenLayer.Neurons)
+            foreach (TresholdNeuron neuron in network.HiddenLayer.Neurons)
             {
                 hiddenLayerElement.Add(StoreNeuron(neuron));
             }
 
-            var outputLayerElement = new XElement("OutputLayer");
+            XElement outputLayerElement = new XElement("OutputLayer");
 
-            foreach (var neuron in network.OutputLayer.Neurons)
+            foreach (TresholdNeuron neuron in network.OutputLayer.Neurons)
             {
                 outputLayerElement.Add(StoreNeuron(neuron));
             }
 
-            var connections0Element = new XElement("Connections0");
+            XElement connections0Element = new XElement("Connections0");
             network.Connections[0].ForEach(s => connections0Element.Add(StoreSynapse(s)));
 
-            var connections1Element = new XElement("Connections1");
+            XElement connections1Element = new XElement("Connections1");
             network.Connections[1].ForEach(s => connections1Element.Add(StoreSynapse(s)));
 
             root.Add(inputLayerElement);
@@ -50,35 +50,35 @@ namespace SciML.NeuralNetwork.Evolution
 
         public static T FromFile<T>(string fileName) where T : EvolvingNeuralNetBase
         {
-            var network = Activator.CreateInstance<T>();
-            var root = XDocument.Load(fileName).Element(typeof(T).Name);
+            T network = Activator.CreateInstance<T>();
+            XElement root = XDocument.Load(fileName).Element(typeof(T).Name);
 
             if (root == null)
             {
                 throw new ArgumentException($"You are trying to load brain not of type {typeof(T).Name}");
             }
 
-            var inputLayerElements = root.Element("InputLayer").Elements().ToArray();
+            XElement[] inputLayerElements = root.Element("InputLayer").Elements().ToArray();
 
             for (int i = 0; i < inputLayerElements.Count(); i++)
             {
-                var neuron = LoadNeuron(inputLayerElements[i]);
+                TresholdNeuron neuron = LoadNeuron(inputLayerElements[i]);
                 neuron.Inputs.Add(new Synapse(i, i, 1));
                 network.InputLayer.Neurons[i] = neuron;
             }
 
-            var hiddenLayerElements = root.Element("HiddenLayer").Elements().ToArray();
+            XElement[] hiddenLayerElements = root.Element("HiddenLayer").Elements().ToArray();
 
             for (int i = 0; i < hiddenLayerElements.Count(); i++)
             {
                 network.HiddenLayer.Neurons[i] = LoadNeuron(hiddenLayerElements[i]);
             }
 
-            var outputLayerElements = root.Element("OutputLayer").Elements().ToArray();
+            XElement[] outputLayerElements = root.Element("OutputLayer").Elements().ToArray();
 
             for (int i = 0; i < outputLayerElements.Count(); i++)
             {
-                var neuron = LoadNeuron(outputLayerElements[i]);
+                TresholdNeuron neuron = LoadNeuron(outputLayerElements[i]);
                 neuron.Outputs.Add(new Synapse(i, i, 1));
                 network.OutputLayer.Neurons[i] = neuron;
             }
@@ -89,13 +89,13 @@ namespace SciML.NeuralNetwork.Evolution
             root.Element("Connections1").Elements().ToList()
                 .ForEach(s => network.Connections[1].Add(LoadSynapse(s)));
 
-            foreach (var synapse in network.Connections[0])
+            foreach (Synapse synapse in network.Connections[0])
             {
                 network.InputLayer.Neurons[synapse.InIndex].Outputs.Add(synapse);
                 network.HiddenLayer.Neurons[synapse.OutIndex].Inputs.Add(synapse);
             }
 
-            foreach (var synapse in network.Connections[1])
+            foreach (Synapse synapse in network.Connections[1])
             {
                 network.HiddenLayer.Neurons[synapse.InIndex].Outputs.Add(synapse);
                 network.OutputLayer.Neurons[synapse.OutIndex].Inputs.Add(synapse);
@@ -114,9 +114,9 @@ namespace SciML.NeuralNetwork.Evolution
 
         private static Synapse LoadSynapse(XElement synapseXElement)
         {
-            var indexSource = Convert.ToInt32(synapseXElement.Attribute("sourceIndex").Value);
-            var indexDestination = Convert.ToInt32(synapseXElement.Attribute("destinationIndex").Value);
-            var weight = Convert.ToDouble(synapseXElement.Attribute("weight").Value);
+            int indexSource = Convert.ToInt32(synapseXElement.Attribute("sourceIndex").Value);
+            int indexDestination = Convert.ToInt32(synapseXElement.Attribute("destinationIndex").Value);
+            double weight = Convert.ToDouble(synapseXElement.Attribute("weight").Value);
 
             return new Synapse(indexSource, indexDestination, weight);
         }
@@ -130,11 +130,11 @@ namespace SciML.NeuralNetwork.Evolution
 
         private static TresholdNeuron LoadNeuron(XElement brainXml)
         {
-            var function = ThresholdFunction.GetFunction(brainXml.Attribute("function").Value);
-            var parameters = brainXml.Attribute("params").Value.Split(' ');
-            var parsedParams = new List<double>();
+            ThresholdFunction function = ThresholdFunction.GetFunction(brainXml.Attribute("function").Value);
+            string[] parameters = brainXml.Attribute("params").Value.Split(' ');
+            List<double> parsedParams = new List<double>();
 
-            foreach (var parameter in parameters)
+            foreach (string parameter in parameters)
             {
                 parsedParams.Add(Convert.ToDouble(parameter.Trim()));
             }

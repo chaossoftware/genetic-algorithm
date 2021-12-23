@@ -6,11 +6,11 @@ namespace SciML.GeneticAlgorithm
     internal class ChromosomeComparer<C, T> : IComparer<C> where C : IChromosome<C> where T : IComparable<T>
     {
         private readonly Dictionary<C, T> _cache = new Dictionary<C, T>();
-        private readonly GeneticEngine<C, T> _engineInstance;
+        private readonly IFitness<C, T> _fitnessFunction;
 
-        public ChromosomeComparer(GeneticEngine<C, T> engine)
+        public ChromosomeComparer(IFitness<C, T> fitnessFunction)
         {
-            _engineInstance = engine;
+            _fitnessFunction = fitnessFunction;
         }
 
         public int Compare(C chromosome, C anotherChromosome)
@@ -27,7 +27,7 @@ namespace SciML.GeneticAlgorithm
 
             if (!chromosomeFitCached)
             {
-                chromosomeFit = _engineInstance._fitnessFunction.Calculate(chromosome);
+                chromosomeFit = _fitnessFunction.Calculate(chromosome);
                 _cache.Add(chromosome, chromosomeFit);
             }
 

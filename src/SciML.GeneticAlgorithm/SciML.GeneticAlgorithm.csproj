@@ -5,4 +5,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MersenneTwister" Version="1.0.6" />
+  </ItemGroup>
+
 </Project>

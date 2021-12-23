@@ -1,15 +1,20 @@
-﻿using System;
+﻿using MersenneTwister;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SciML.GeneticAlgorithm
 {
+    /// <summary>
+    /// Represents a population of chromosomes
+    /// </summary>
+    /// <typeparam name="C">cromosome type</typeparam>
     public class Population<C> : IEnumerable<C> where C : IChromosome<C>
     {
         private const int DefaultChromosomesCount = 32;
 
-        private readonly Random _random = new Random();
+        private readonly Random _random = Randoms.FastestInt32;
 
         private List<C> chromosomes = new List<C>(DefaultChromosomesCount);
 
@@ -70,9 +75,17 @@ namespace SciML.GeneticAlgorithm
         public List<C> FilterChromosomes<U>() => // where U : IChromosome<U> =>
             chromosomes.Where(c => c is U).ToList();
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>An System.Collections.IEnumerator object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator() =>
             chromosomes.GetEnumerator();
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the chromosomes collection.
+        /// </summary>
+        /// <returns>Returns an enumerator that iterates through the chromosomes collection</returns>
         public IEnumerator<C> GetEnumerator() =>
             chromosomes.GetEnumerator();
     }

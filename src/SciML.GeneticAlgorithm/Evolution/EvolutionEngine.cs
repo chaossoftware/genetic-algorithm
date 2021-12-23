@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MersenneTwister;
+using System;
 using System.Collections.Generic;
 
 namespace SciML.GeneticAlgorithm.Evolution
 {
     public class EvolutionEngine<C, T> : GeneticEngine<C, T> where C : IEvolvingChromosome<C> where T : IComparable<T>
     {
-        private Random probabilityGenerator;
+        private readonly Random _probabilityGenerator;
 
         /// <summary>
         /// delta = (R - D - C * N) * N
@@ -18,7 +19,7 @@ namespace SciML.GeneticAlgorithm.Evolution
         public EvolutionEngine(Population<C> population, IFitness<C, T> fitnessFunc)
             : base(population, fitnessFunc)
         {
-            probabilityGenerator = new Random();
+            _probabilityGenerator = Randoms.FastestDouble;
         }
 
         public IChromosomeFactory ChromosomeFactory { get; set; }
@@ -30,14 +31,14 @@ namespace SciML.GeneticAlgorithm.Evolution
             // First, kill chromosomes affected by spontaneous death
             SpontaneousChromosomesDeath();
 
-            var uniqueTypes = new HashSet<Type>();
+            HashSet<Type> uniqueTypes = new HashSet<Type>();
 
-            var currentPopulationSize = Population.Size;
-            var cache = new List<C>();
+            int currentPopulationSize = Population.Size;
+            List<C> cache = new List<C>();
 
             for (int i = 0; i < currentPopulationSize; i++)
             {
-                var c = Population.GetChromosomeByIndex(i);
+                C c = Population.GetChromosomeByIndex(i);
 
                 if (uniqueTypes.Add(c.GetType()) && ProbabilityRealized(c.SpontaneousBirthRate))
                 {
@@ -55,7 +56,7 @@ namespace SciML.GeneticAlgorithm.Evolution
                 }
             }
 
-            foreach (var chromosomeToKill in cache)
+            foreach (C chromosomeToKill in cache)
             {
                 Population.RemoveChromosome(chromosomeToKill);
             }
@@ -66,12 +67,12 @@ namespace SciML.GeneticAlgorithm.Evolution
 
         private void SpontaneousChromosomesDeath()
         {
-            var currentPopulationSize = Population.Size;
-            var cache = new List<C>();
+            int currentPopulationSize = Population.Size;
+            List<C> cache = new List<C>();
 
             for (int i = 0; i < currentPopulationSize; i++)
             {
-                var c = Population.GetChromosomeByIndex(i);
+                C c = Population.GetChromosomeByIndex(i);
 
                 if (ProbabilityRealized(c.SpontaneousDeathRate))
                 {
@@ -79,7 +80,7 @@ namespace SciML.GeneticAlgorithm.Evolution
                 }
             }
 
-            foreach (var chromosomeToKill in cache)
+            foreach (C chromosomeToKill in cache)
             {
                 Population.RemoveChromosome(chromosomeToKill);
             }
@@ -88,6 +89,6 @@ namespace SciML.GeneticAlgorithm.Evolution
         }
 
         private bool ProbabilityRealized(double expectedProbability) =>
-            expectedProbability > probabilityGenerator.Next(0, 100) / 100d;
+            expectedProbability > _probabilityGenerator.NextDouble();
     }
 }

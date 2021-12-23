@@ -6,8 +6,7 @@ namespace SciML.GeneticAlgorithm
     public class GeneticEngine<C, T> where C : IChromosome<C> where T : IComparable<T>
     {
         internal readonly IFitness<C, T> _fitnessFunction;
-        internal readonly ChromosomeComparer<C, T> _chromosomeComparer;
-
+        private readonly ChromosomeComparer<C, T> _chromosomeComparer;
         private readonly int _originalPopulationSize;
 
         public GeneticEngine(Population<C> population, IFitness<C, T> fitnessFunction)
@@ -15,7 +14,7 @@ namespace SciML.GeneticAlgorithm
             Population = population;
             _originalPopulationSize = population.Size;
             _fitnessFunction = fitnessFunction;
-            _chromosomeComparer = new ChromosomeComparer<C, T>(this);
+            _chromosomeComparer = new ChromosomeComparer<C, T>(_fitnessFunction);
             Population.SortPopulationByFitness(_chromosomeComparer);
         }
 
@@ -41,16 +40,11 @@ namespace SciML.GeneticAlgorithm
 
         public virtual void Evolve()
         {
-            /**
-             * Removes the worst chromosomes and
-             * return population size back to the original size
-             */
+            // Removes the worst chromosomes and return population size back to the original size
             Population.SortPopulationByFitness(_chromosomeComparer);
             Population.Trim(_originalPopulationSize);
 
-            /**
-             * Generates new population based on existing one
-             */
+            //Generates new population based on existing one
             Population<C> newPopulation = new Population<C>();
 
             for (int i = 0; i < _originalPopulationSize && i < ParentChromosomesSurviveCount; i++)

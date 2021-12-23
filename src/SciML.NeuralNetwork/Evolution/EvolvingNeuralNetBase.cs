@@ -296,7 +296,7 @@ namespace SciML.NeuralNetwork.Evolution
             int currentIndex;
             int weightsSize = thisWeights.Count;
             int iterations = Randomizer.Next(1, weightsSize);
-            var used = new HashSet<int>();
+            HashSet<int> used = new HashSet<int>();
 
             for (int i = 0; i < iterations; i++)
             {
@@ -344,7 +344,7 @@ namespace SciML.NeuralNetwork.Evolution
             int currentIndex;
             int neuronsSize = thisClone.NeuronsCount;
             int iterations = Randomizer.Next(1, neuronsSize);
-            var used = new HashSet<int>();
+            HashSet<int> used = new HashSet<int>();
 
             for (int i = 0; i < iterations; i++)
             {
