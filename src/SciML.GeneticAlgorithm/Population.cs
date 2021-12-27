@@ -30,7 +30,6 @@ namespace SciML.GeneticAlgorithm
         public void AddChromosome(C chromosome) =>
             chromosomes.Add(chromosome);
 
-        // TODO improve random generator (maybe use pattern strategy?)
         /// <summary>
         /// Gets chromosime with random index based on <see cref="Random"/>
         /// </summary>

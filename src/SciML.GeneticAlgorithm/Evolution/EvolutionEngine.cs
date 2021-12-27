@@ -4,15 +4,32 @@ using System.Collections.Generic;
 
 namespace SciML.GeneticAlgorithm.Evolution
 {
-    public class EvolutionEngine<C, T> : GeneticEngine<C, T> where C : IEvolvingChromosome<C> where T : IComparable<T>
+    /// <summary>
+    /// Simulation of a population evolution/growth considering population model.<br/>
+    /// B - creature spontaneous birth rate<br/>
+    /// R - creature spontaneous replication rate<br/>
+    /// M - creature spontaneous mutation rate<br/>
+    /// D - creature spontaneous death rate<br/>
+    /// C - "crowding" coefficient<br/>
+    /// N - current number of creatures<br/>
+    /// ------------------------------------<br/>
+    /// delta = B + (R * (1 - M) - D - C * N) * N<br/>  
+    /// => R * (1 - M) : adjusted replication chance per creature<br/>
+    /// => - D - C * N : death chance per creature adjusted for crowding<br/>
+    /// ------------------------------------<br/>
+    /// if there are 2 creature types then:<br/>
+    /// delta1 = B1 + (R1 - D1)*N1 - R1*M1*N1<br/>
+    /// delta2 = B2 + (R2 - D2)*N2 + R1*M1*N1
+    /// </summary>
+    /// <typeparam name="C">creature type</typeparam>
+    /// <typeparam name="T">fitness measure type</typeparam>
+    public class EvolutionEngine<C, T> : GeneticEngine<C, T> where C : ICreature<C> where T : IComparable<T>
     {
         private readonly Random _probabilityGenerator;
 
         /// <summary>
-        /// delta = (R - D - C * N) * N
-        /// 
-        /// delta1 = B1 + (R1 - D1)*N1 - R1*M1*N1
-        /// delta2 = B2 + (R2 - D2)*N2 + R1*M1*N1
+        /// Initializes a new instance of the <see cref="EvolutionEngine{C, T}"/> class 
+        /// based on initial population and fitness function.
         /// </summary>
         /// <param name="population"></param>
         /// <param name="fitnessFunc"></param>
@@ -22,13 +39,24 @@ namespace SciML.GeneticAlgorithm.Evolution
             _probabilityGenerator = Randoms.FastestDouble;
         }
 
-        public IChromosomeFactory ChromosomeFactory { get; set; }
+        /// <summary>
+        /// Gets of sets creatures factory.
+        /// </summary>
+        public ICreaturesFactory CreaturesFactory { get; set; }
 
+        /// <summary>
+        /// Gets or sets crowding coefficient.
+        /// </summary>
         public double CrowdingCoefficient { get; set; }
 
+        /// <summary>
+        /// Performs single population evolution step. 
+        /// Based on fact of probabilities realization kills, replicates, 
+        /// mutates or creates new creatures.
+        /// </summary>
         public override void Evolve()
         {
-            // First, kill chromosomes affected by spontaneous death
+            // First, kill creatures affected by spontaneous death
             SpontaneousChromosomesDeath();
 
             HashSet<Type> uniqueTypes = new HashSet<Type>();

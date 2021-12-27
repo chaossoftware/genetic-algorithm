@@ -2,6 +2,11 @@
 
 namespace SciML.GeneticAlgorithm
 {
+    /// <summary>
+    /// Interface for fitness functions to determine best chromosomes in population.
+    /// </summary>
+    /// <typeparam name="C">population chromosomes type</typeparam>
+    /// <typeparam name="T">fitness measure type</typeparam>
     public interface IFitness<C, T> where C : IChromosome<C> where T : IComparable<T>
     {
         /// <summary>

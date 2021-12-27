@@ -3,10 +3,32 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Vitaliy Dobriyan</Authors>
+    <Company />
+    <Copyright>Copyright © 2021 Vitaliy Dobriyan</Copyright>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>genetic-algorithm machine-learning ml</PackageTags>
+    <RepositoryUrl>https://bitbucket.org/dobriyanchik/sciml.git</RepositoryUrl>
+    <PackageReleaseNotes>first release: base of genetic algorithm and evolution engine</PackageReleaseNotes>
+    <PackageProjectUrl>https://bitbucket.org/dobriyanchik/sciml</PackageProjectUrl>
+    <PackageIcon>icon.jpg</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MersenneTwister" Version="1.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
