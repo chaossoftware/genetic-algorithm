@@ -2,52 +2,12 @@
 
 namespace SciML.NeuralNetwork.Activation
 {
-    public enum ActivationFunctionType
-    {
-        HyperbolicTangent,
-        Sigmoid,
-        Logistic,
-        Linear,
-        PiecewiseLinear,
-        BinaryShift,
-        Cosine,
-        Exponential,
-        Gaussian,
-        GaussianDerivative
-    }
-
     public abstract class ActivationFunction
     {
         public abstract string Name { get; }
 
-        public static ActivationFunction Get(ActivationFunctionType activationFunction)
-        {
-            switch (activationFunction)
-            {
-                case ActivationFunctionType.BinaryShift:
-                    return new BinaryShiftFunction();
-                case ActivationFunctionType.Cosine:
-                    return new CosineFunction();
-                case ActivationFunctionType.Linear:
-                    return new LinearFunction();
-                case ActivationFunctionType.Logistic:
-                    return new LogisticFunction();
-                case ActivationFunctionType.Exponential:
-                    return new ExponentialFunction();
-                case ActivationFunctionType.Gaussian:
-                    return new GaussianFunction();
-                case ActivationFunctionType.GaussianDerivative:
-                    return new GaussianDerivativeFunction();
-                case ActivationFunctionType.HyperbolicTangent:
-                    return new HyperbolicTangentFunction();
-                case ActivationFunctionType.PiecewiseLinear:
-                    return new PiecewiseLinearFunction();
-                case ActivationFunctionType.Sigmoid:
-                    return new SigmoidFunction();
-                default:
-                    throw new NotImplementedException($"'{activationFunction}' activatino function is not implemented yet");
-            }
-        }
+        public static ActivationFunction Get<T>(T type) where T : ActivationFunction =>
+            Activator.CreateInstance(type.GetType()) as T;
 
         public abstract double Phi(double arg);
 

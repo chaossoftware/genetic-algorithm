@@ -4,33 +4,50 @@ using System.Linq;
 
 namespace SciML.NeuralNetwork.Base
 {
+    /// <summary>
+    /// Describes base neuron of hidden layer with activation function.
+    /// </summary>
     public class HiddenNeuron : INeuron<HiddenNeuron>
     {
-        private ActivationFunction activationFunction;
-        private ActivationFunctionType activationFunctionType;
+        private readonly ActivationFunction _activationFunction;
 
-        public HiddenNeuron(ActivationFunctionType activationFunctionType)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HiddenNeuron"/> class 
+        /// with specified activation function.
+        /// </summary>
+        /// <param name="activationFunction">activation function instance</param>
+        public HiddenNeuron(ActivationFunction activationFunction)
         {
             Inputs = new List<Synapse>();
             Outputs = new List<Synapse>();
-            this.activationFunctionType = activationFunctionType;
-            activationFunction = ActivationFunction.Get(activationFunctionType);
+            _activationFunction = activationFunction;
         }
 
+        /// <summary>
+        /// Gets or sets list of input synapses.
+        /// </summary>
         public List<Synapse> Inputs { get; set; }
 
+        /// <summary>
+        /// Gets or sets list of output synapses.
+        /// </summary>
         public List<Synapse> Outputs { get; set; }
 
+        /// <summary>
+        /// Makes a copy of the neuron with the same activation function.
+        /// </summary>
+        /// <returns>neuron copy</returns>
         public virtual object Clone() =>
-            new HiddenNeuron(activationFunctionType);
+            new HiddenNeuron(_activationFunction);
 
+        /// <summary>
+        /// Processes input signals through the neuron (processes all inputs via 
+        /// activation function and multiplies to weight).
+        /// </summary>
         public virtual void Process()
         {
-            double arg = 0;
-
-            arg = Inputs.Sum(s => s.Signal);
-
-            Outputs.ForEach(s => s.Signal = s.Weight * activationFunction.Phi(arg));
+            double arg = Inputs.Sum(s => s.Signal);
+            Outputs.ForEach(s => s.Signal = s.Weight * _activationFunction.Phi(arg));
         }
     }
 }

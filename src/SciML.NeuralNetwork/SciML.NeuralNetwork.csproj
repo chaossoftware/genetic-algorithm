@@ -3,6 +3,28 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Vitaliy Dobriyan</Authors>
+    <Company />
+    <Copyright>Copyright © 2021 Vitaliy Dobriyan</Copyright>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://bitbucket.org/dobriyanchik/sciml</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryUrl>https://bitbucket.org/dobriyanchik/sciml.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>neural-network machine-learning ml</PackageTags>
+    <PackageReleaseNotes>first release: base of neural networking (abstract network, layers and entities). 2 and 3 layer networks base. Neural net base for evolution process.</PackageReleaseNotes>
+    <PackageIcon>icon.jpg</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
