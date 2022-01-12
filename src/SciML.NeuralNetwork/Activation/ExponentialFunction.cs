@@ -2,7 +2,7 @@
 
 namespace SciML.NeuralNetwork.Activation
 {
-    public class ExponentialFunction : ActivationFunction
+    public class ExponentialFunction : ActivationFunctionBase
     {
         public override string Name => "Exponential";
 

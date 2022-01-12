@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SciML.NeuralNetwork.Base
+namespace SciML.NeuralNetwork.Networks
 {
     /// <summary>
     /// Base for neural networks implementation (requires network to be cloneable).

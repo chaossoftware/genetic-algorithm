@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SciML.NeuralNetwork.Base
+namespace SciML.NeuralNetwork.Entities
 {
     /// <summary>
     /// Describes base neuron of outpul layer.

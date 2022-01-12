@@ -1,6 +1,6 @@
 ﻿namespace SciML.NeuralNetwork.Activation
 {
-    public class LinearFunction : ActivationFunction
+    public class LinearFunction : ActivationFunctionBase
     {
         public override string Name => "Linear";
 

@@ -1,6 +1,6 @@
 ﻿namespace SciML.NeuralNetwork.Activation
 {
-    public class GaussianFunction : ActivationFunction
+    public class GaussianFunction : ActivationFunctionBase
     {
         public override string Name => "Gaussian";
 

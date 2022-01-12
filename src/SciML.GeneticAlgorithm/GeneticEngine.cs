@@ -15,6 +15,7 @@ namespace SciML.GeneticAlgorithm
         internal readonly IFitness<C, T> _fitnessFunction;
         private readonly ChromosomeComparer<C, T> _chromosomeComparer;
         private readonly int _originalPopulationSize;
+        private bool sorted = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GeneticEngine{C, T}"/> class 
@@ -28,7 +29,6 @@ namespace SciML.GeneticAlgorithm
             _originalPopulationSize = population.Size;
             _fitnessFunction = fitnessFunction;
             _chromosomeComparer = new ChromosomeComparer<C, T>(_fitnessFunction);
-            Population.SortPopulationByFitness(_chromosomeComparer);
         }
 
         /// <summary>
@@ -39,12 +39,36 @@ namespace SciML.GeneticAlgorithm
         /// <summary>
         /// Gets the best chromosome in population (with index 0)
         /// </summary>
-        public C BestChromosome => Population.GetChromosomeByIndex(0);
+        public C BestChromosome
+        {
+            get
+            {
+                if (!sorted)
+                {
+                    Population.SortByFitness(_chromosomeComparer);
+                    sorted = true;
+                }
+
+                return Population.GetChromosomeByIndex(0);
+            }
+        }
 
         /// <summary>
         /// Gets the worst chromosome in population (with largest index)
         /// </summary>
-        public C WorstChromosome => Population.GetChromosomeByIndex(Population.Size - 1);
+        public C WorstChromosome
+        {
+            get
+            {
+                if (!sorted)
+                {
+                    Population.SortByFitness(_chromosomeComparer);
+                    sorted = true;
+                }
+
+                return Population.GetChromosomeByIndex(Population.Size - 1);
+            }
+        }
 
         /// <summary>
         /// Gets number of parental chromosomes, which survive (and move to new population)
@@ -60,8 +84,13 @@ namespace SciML.GeneticAlgorithm
         /// </summary>
         public virtual void Evolve()
         {
+            _chromosomeComparer.ClearCache();
+
             // Removes the worst chromosomes and returns population size back to the original size
-            Population.SortPopulationByFitness(_chromosomeComparer);
+            if (!sorted)
+            {
+                Population.SortByFitness(_chromosomeComparer);
+            }
 
             if (Population.Size > _originalPopulationSize)
             {
@@ -81,9 +110,15 @@ namespace SciML.GeneticAlgorithm
             for (int i = 0; i < Population.Size; i++)
             {
                 C chromosome = Population.GetChromosomeByIndex(i);
+                C otherChromosome;
                 C mutated = chromosome.Mutate();
 
-                C otherChromosome = Population.GetRandomChromosome();
+                do
+                {
+                    otherChromosome = Population.GetRandomChromosome();
+                }
+                while (otherChromosome.Equals(chromosome));
+
                 List<C> crossovered = chromosome.Crossover(otherChromosome);
 
                 newPopulation.AddChromosome(mutated);
@@ -95,6 +130,7 @@ namespace SciML.GeneticAlgorithm
             }
 
             Population = newPopulation;
+            sorted = false;
         }
 
         /// <summary>
@@ -116,10 +152,5 @@ namespace SciML.GeneticAlgorithm
         /// <param name="chromosome">chromosome instance</param>
         /// <returns>fitness score in form of fitness measure type</returns>
         public T GetFitnessOf(C chromosome) => _chromosomeComparer.Fit(chromosome);
-
-        /// <summary>
-        /// Clears cache of chromosomes comparator.
-        /// </summary>
-        public void ClearCache() => _chromosomeComparer.ClearCache();
     }
 }

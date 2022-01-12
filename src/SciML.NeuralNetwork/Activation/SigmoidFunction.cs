@@ -2,7 +2,7 @@
 
 namespace SciML.NeuralNetwork.Activation
 {
-    public class SigmoidFunction : ActivationFunction
+    public class SigmoidFunction : ActivationFunctionBase
     {
         public override string Name => "Sigmoid";
 

@@ -1,6 +1,6 @@
 ﻿namespace SciML.NeuralNetwork.Activation
 {
-    public class BinaryShiftFunction : ActivationFunction
+    public class BinaryShiftFunction : ActivationFunctionBase
     {
         public override string Name => "Binary shift";
 

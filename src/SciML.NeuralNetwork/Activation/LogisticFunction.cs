@@ -1,6 +1,6 @@
 ﻿namespace SciML.NeuralNetwork.Activation
 {
-    public class LogisticFunction : ActivationFunction
+    public class LogisticFunction : ActivationFunctionBase
     {
         public override string Name => "Logistic";
 

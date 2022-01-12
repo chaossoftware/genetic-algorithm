@@ -1,0 +1,311 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SciML.GeneticAlgorithm</name>
+    </assembly>
+    <members>
+        <member name="T:SciML.GeneticAlgorithm.BulkGeneticEngine`2">
+            <summary>
+            Wrapper over <see cref="T:SciML.GeneticAlgorithm.GeneticEngine`2"/> to perform iterative evolution process
+            with ability to subscribe to iteration events.
+            </summary>
+            <typeparam name="C">cromosome type</typeparam>
+            <typeparam name="T">fitness measure type</typeparam>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.BulkGeneticEngine`2.#ctor(SciML.GeneticAlgorithm.Population{`0},SciML.GeneticAlgorithm.IFitness{`0,`1})">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.GeneticAlgorithm.BulkGeneticEngine`2"/> class 
+            based on initial population and fitness function.
+            </summary>
+            <param name="population">initial population for evolution process</param>
+            <param name="fitnessFunction">function to calculate chromosomes fitness</param>
+        </member>
+        <member name="T:SciML.GeneticAlgorithm.BulkGeneticEngine`2.GeneticIterationEvent">
+            <summary>
+            Delegate for <see cref="E:SciML.GeneticAlgorithm.BulkGeneticEngine`2.OnIterate"/> event.
+            </summary>
+            <param name="engineInstance"></param>
+        </member>
+        <member name="E:SciML.GeneticAlgorithm.BulkGeneticEngine`2.OnIterate">
+            <summary>
+            Event called after each evolution step execution.
+            </summary>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.BulkGeneticEngine`2.Iteration">
+            <summary>
+            Gets or sets evolution iteration.
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.BulkGeneticEngine`2.Evolve(System.Int32)">
+            <summary>
+            Performs specified number of evolution steps (<see cref="M:SciML.GeneticAlgorithm.GeneticEngine`2.Evolve"/>) 
+            and calling <see cref="E:SciML.GeneticAlgorithm.BulkGeneticEngine`2.OnIterate"/> after each iteration. 
+            The operation could be terminated.
+            </summary>
+            <param name="iterations">number of iterations to perform</param>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.BulkGeneticEngine`2.Evolve">
+            <summary>
+            Performs single evolution step (<see cref="M:SciML.GeneticAlgorithm.GeneticEngine`2.Evolve"/>) 
+            and calls <see cref="E:SciML.GeneticAlgorithm.BulkGeneticEngine`2.OnIterate"/> event.
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.BulkGeneticEngine`2.Terminate">
+            <summary>
+            Terminates evolution process.
+            </summary>
+        </member>
+        <member name="T:SciML.GeneticAlgorithm.Evolution.EvolutionEngine`2">
+            <summary>
+            Simulation of a population evolution/growth considering population model.<br/>
+            B - creature spontaneous birth rate<br/>
+            R - creature spontaneous replication rate<br/>
+            M - creature spontaneous mutation rate<br/>
+            D - creature spontaneous death rate<br/>
+            C - "crowding" coefficient<br/>
+            N - current number of creatures<br/>
+            ------------------------------------<br/>
+            delta = B + (R * (1 - M) - D - C * N) * N<br/>  
+            => R * (1 - M) : adjusted replication chance per creature<br/>
+            => - D - C * N : death chance per creature adjusted for crowding<br/>
+            ------------------------------------<br/>
+            if there are 2 creature types then:<br/>
+            delta1 = B1 + (R1 - D1)*N1 - R1*M1*N1<br/>
+            delta2 = B2 + (R2 - D2)*N2 + R1*M1*N1
+            </summary>
+            <typeparam name="C">creature type</typeparam>
+            <typeparam name="T">fitness measure type</typeparam>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Evolution.EvolutionEngine`2.#ctor(SciML.GeneticAlgorithm.Population{`0},SciML.GeneticAlgorithm.IFitness{`0,`1})">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.GeneticAlgorithm.Evolution.EvolutionEngine`2"/> class 
+            based on initial population and fitness function.
+            </summary>
+            <param name="population"></param>
+            <param name="fitnessFunc"></param>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.Evolution.EvolutionEngine`2.CreaturesFactory">
+            <summary>
+            Gets of sets creatures factory.
+            </summary>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.Evolution.EvolutionEngine`2.CrowdingCoefficient">
+            <summary>
+            Gets or sets crowding coefficient.
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Evolution.EvolutionEngine`2.Evolve">
+            <summary>
+            Performs single population evolution step. 
+            Based on fact of probabilities realization kills, replicates, 
+            mutates or creates new creatures.
+            </summary>
+        </member>
+        <member name="T:SciML.GeneticAlgorithm.Evolution.ICreature`1">
+            <summary>
+            Wrapper over <see cref="T:SciML.GeneticAlgorithm.IChromosome`1"/> with population model parameters.
+            </summary>
+            <typeparam name="C"></typeparam>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.Evolution.ICreature`1.SpontaneousBirthRate">
+            <summary>
+            Gets or sets probability of creature spontaneous birth event.
+            </summary>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.Evolution.ICreature`1.SpontaneousDeathRate">
+            <summary>
+            Gets or sets probability of creature spontaneous death event.
+            </summary>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.Evolution.ICreature`1.MutationRate">
+            <summary>
+            Gets or sets probability of creature mutation event.
+            </summary>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.Evolution.ICreature`1.ReplicationRate">
+            <summary>
+            Gets or sets probability of creature replication event.
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Evolution.ICreature`1.Clone">
+            <summary>
+            Makes full creature clone.
+            </summary>
+            <returns>clone of creature</returns>
+        </member>
+        <member name="T:SciML.GeneticAlgorithm.Evolution.ICreaturesFactory">
+            <summary>
+            Interface for creatures factories.
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Evolution.ICreaturesFactory.GetCreature``1">
+            <summary>
+            Constructs new instance of <see cref="T:SciML.GeneticAlgorithm.Evolution.ICreature`1"/>
+            </summary>
+            <typeparam name="C">specific creature implementation</typeparam>
+            <returns>creature instance</returns>
+        </member>
+        <member name="T:SciML.GeneticAlgorithm.GeneticEngine`2">
+            <summary>
+            Genetic engine has defined initial population, fitness function and evolution params.<br/>
+            The engine evolves from initial population using chromosomes mutation and crossover via
+            selecting best individuals based on fitness function results.
+            </summary>
+            <typeparam name="C">cromosome type</typeparam>
+            <typeparam name="T">fitness measure type</typeparam>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.GeneticEngine`2.#ctor(SciML.GeneticAlgorithm.Population{`0},SciML.GeneticAlgorithm.IFitness{`0,`1})">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.GeneticAlgorithm.GeneticEngine`2"/> class 
+            based on initial population and fitness function.
+            </summary>
+            <param name="population">initial population for evolution process</param>
+            <param name="fitnessFunction">function to calculate chromosomes fitness</param>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.GeneticEngine`2.Population">
+            <summary>
+            Gets or sets evolving population
+            </summary>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.GeneticEngine`2.BestChromosome">
+            <summary>
+            Gets the best chromosome in population (with index 0)
+            </summary>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.GeneticEngine`2.WorstChromosome">
+            <summary>
+            Gets the worst chromosome in population (with largest index)
+            </summary>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.GeneticEngine`2.ParentChromosomesSurviveCount">
+            <summary>
+            Gets number of parental chromosomes, which survive (and move to new population)
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.GeneticEngine`2.Evolve">
+            <summary>
+            Performs population evolution step:<br/> 
+             - sorts population by fitness score<br/> 
+             - trims population to original size<br/>
+             - generates new population based on survived parent chromosomes (without mutation) 
+             and mutation and crossover of rest of chromosomes.
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.GeneticEngine`2.CallMassExtinction">
+            <summary>
+            Simulate extinction event by killing of 90% of population ignoring chromosome fitness.
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.GeneticEngine`2.GetFitnessOf(`0)">
+            <summary>
+            Gets fitness score of specified chromosome.
+            </summary>
+            <param name="chromosome">chromosome instance</param>
+            <returns>fitness score in form of fitness measure type</returns>
+        </member>
+        <member name="T:SciML.GeneticAlgorithm.IChromosome`1">
+            <summary>
+            Interface for genetic algorithm chromosomes with basic operations.
+            </summary>
+            <typeparam name="C">specific chromosome implementation</typeparam>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.IChromosome`1.Crossover(`0)">
+            <summary>
+            Crossovers current chromosome with another one.
+            </summary>
+            <param name="anotherChromosome">chromosome to crossover with</param>
+            <returns>list of offsprings</returns>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.IChromosome`1.Mutate">
+            <summary>
+            Performes mutation on current chromosome.
+            </summary>
+            <returns>mutated chromosome</returns>
+        </member>
+        <member name="T:SciML.GeneticAlgorithm.IFitness`2">
+            <summary>
+            Interface for fitness functions to determine best chromosomes in population.
+            </summary>
+            <typeparam name="C">population chromosomes type</typeparam>
+            <typeparam name="T">fitness measure type</typeparam>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.IFitness`2.Calculate(`0)">
+            <summary>
+            Assume that chromosome1 is better than chromosome2 <br/>
+            fit1 = calculate(chromosome1) <br/>
+            fit2 = calculate(chromosome2) <br/>
+            So the following condition must be true <br/>
+            fit1.compareTo(fit2) > 0 <br/>
+            </summary>
+            <param name="chromosome">chromosome instance to calculate fit</param>
+            <returns></returns>
+        </member>
+        <member name="T:SciML.GeneticAlgorithm.Population`1">
+            <summary>
+            Represents a population of chromosomes
+            </summary>
+            <typeparam name="C">cromosome type</typeparam>
+        </member>
+        <member name="P:SciML.GeneticAlgorithm.Population`1.Size">
+            <summary>
+            Gets value indicating population size
+            </summary>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.AddChromosome(`0)">
+            <summary>
+            Adds new chromosome to existing ones
+            </summary>
+            <param name="chromosome">chromosome instance</param>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.GetRandomChromosome">
+            <summary>
+            Gets chromosime with random index based on <see cref="T:System.Random"/>
+            </summary>
+            <returns>chromosome instance</returns>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.GetChromosomeByIndex(System.Int32)">
+            <summary>
+            Gets chromosome with specified index
+            </summary>
+            <param name="index">chromosome index in list or chromosomes</param>
+            <returns>chromosome instance</returns>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.RemoveChromosome(`0)">
+            <summary>
+            Removes specified chromosome from chromosomos list
+            </summary>
+            <param name="chromosome">chromosome instance</param>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.SortByFitness(System.Collections.Generic.IComparer{`0})">
+            <summary>
+            Sorts list of existing chromosomes using specified comparator
+            </summary>
+            <param name="chromosomesComparator">chromosome custom comparator</param>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.Trim(System.Int32)">
+            <summary>
+            Shortens the population till specific length
+            </summary>
+            <param name="length">number of chromosomes to leave in the population</param>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.FilterChromosomes``1">
+            <summary>
+            Filters population by specified chromosome type
+            </summary>
+            <typeparam name="U"></typeparam>
+            <returns>list of chromosomes of specified type</returns>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>An System.Collections.IEnumerator object that can be used to iterate through the collection.</returns>
+        </member>
+        <member name="M:SciML.GeneticAlgorithm.Population`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the chromosomes collection.
+            </summary>
+            <returns>Returns an enumerator that iterates through the chromosomes collection</returns>
+        </member>
+    </members>
+</doc>

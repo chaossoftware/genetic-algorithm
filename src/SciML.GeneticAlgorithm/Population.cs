@@ -53,10 +53,10 @@ namespace SciML.GeneticAlgorithm
             chromosomes.Remove(chromosome);
 
         /// <summary>
-        /// Sorts list of existing chromosomes based on fitness score descending
+        /// Sorts list of existing chromosomes using specified comparator
         /// </summary>
         /// <param name="chromosomesComparator">chromosome custom comparator</param>
-        public void SortPopulationByFitness(IComparer<C> chromosomesComparator) =>
+        public void SortByFitness(IComparer<C> chromosomesComparator) =>
             chromosomes.Sort(chromosomesComparator);
 
         /// <summary>

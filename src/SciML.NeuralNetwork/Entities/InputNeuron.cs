@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SciML.NeuralNetwork.Base
+namespace SciML.NeuralNetwork.Entities
 {
     /// <summary>
     /// Describes base neuron of input layer.

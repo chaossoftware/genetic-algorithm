@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SciML.NeuralNetwork.Base
+namespace SciML.NeuralNetwork.Entities
 {
     /// <summary>
     /// Describes base neuron of hidden layer with activation function.
     /// </summary>
     public class HiddenNeuron : INeuron<HiddenNeuron>
     {
-        private readonly ActivationFunction _activationFunction;
+        private readonly ActivationFunctionBase _activationFunction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HiddenNeuron"/> class 
         /// with specified activation function.
         /// </summary>
         /// <param name="activationFunction">activation function instance</param>
-        public HiddenNeuron(ActivationFunction activationFunction)
+        public HiddenNeuron(ActivationFunctionBase activationFunction)
         {
             Inputs = new List<Synapse>();
             Outputs = new List<Synapse>();

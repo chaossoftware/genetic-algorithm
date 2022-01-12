@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SciML.NeuralNetwork.Base
+namespace SciML.NeuralNetwork.Entities
 {
     /// <summary>
     /// Interface for neurons.

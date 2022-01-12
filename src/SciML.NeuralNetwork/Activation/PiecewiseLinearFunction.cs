@@ -2,7 +2,7 @@
 
 namespace SciML.NeuralNetwork.Activation
 {
-    public class PiecewiseLinearFunction : ActivationFunction
+    public class PiecewiseLinearFunction : ActivationFunctionBase
     {
         public override string Name => "Piecewise Linear";
 

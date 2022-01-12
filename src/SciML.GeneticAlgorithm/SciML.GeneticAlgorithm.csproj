@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Vitaliy Dobriyan</Authors>
     <Company />
@@ -14,6 +14,10 @@
     <PackageReleaseNotes>first release: base of genetic algorithm and evolution engine</PackageReleaseNotes>
     <PackageProjectUrl>https://bitbucket.org/dobriyanchik/sciml</PackageProjectUrl>
     <PackageIcon>icon.jpg</PackageIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Dev\Sources\sci\sciml\src\SciML.GeneticAlgorithm\SciML.GeneticAlgorithm.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

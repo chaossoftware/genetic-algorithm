@@ -2,7 +2,7 @@
 
 namespace SciML.NeuralNetwork.Activation
 {
-    public class CosineFunction : ActivationFunction
+    public class CosineFunction : ActivationFunctionBase
     {
         public override string Name => "Cosine";
 

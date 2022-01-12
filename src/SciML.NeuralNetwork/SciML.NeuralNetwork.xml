@@ -1,0 +1,515 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SciML.NeuralNetwork</name>
+    </assembly>
+    <members>
+        <member name="T:SciML.NeuralNetwork.Activation.ActivationFunctionBase">
+            <summary>
+            Abstraction for activation functions.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Activation.ActivationFunctionBase.Name">
+            <summary>
+            Gets activation function name.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Activation.ActivationFunctionBase.Get``1(``0)">
+            <summary>
+            Creates activation function of specified type.
+            </summary>
+            <typeparam name="T">activation function type</typeparam>
+            <param name="type">type of activation function</param>
+            <returns>instance of activation function</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Activation.ActivationFunctionBase.Phi(System.Double)">
+            <summary>
+            Calculates function value for given argument.
+            </summary>
+            <param name="arg">function argument</param>
+            <returns>calculated value</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Activation.ActivationFunctionBase.Dphi(System.Double)">
+            <summary>
+            derivative
+            </summary>
+            <param name="arg"></param>
+            <returns>calculated value</returns>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Entities.HiddenNeuron">
+            <summary>
+            Describes base neuron of hidden layer with activation function.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.HiddenNeuron.#ctor(SciML.NeuralNetwork.Activation.ActivationFunctionBase)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Entities.HiddenNeuron"/> class 
+            with specified activation function.
+            </summary>
+            <param name="activationFunction">activation function instance</param>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.HiddenNeuron.Inputs">
+            <summary>
+            Gets or sets list of input synapses.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.HiddenNeuron.Outputs">
+            <summary>
+            Gets or sets list of output synapses.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.HiddenNeuron.Clone">
+            <summary>
+            Makes a copy of the neuron with the same activation function.
+            </summary>
+            <returns>neuron copy</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.HiddenNeuron.Process">
+            <summary>
+            Processes input signals through the neuron (processes all inputs via 
+            activation function and multiplies to weight).
+            </summary>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Entities.INeuron`1">
+            <summary>
+            Interface for neurons.
+            </summary>
+            <typeparam name="N">neuron type</typeparam>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.INeuron`1.Process">
+            <summary>
+            Processes signal through neuron.
+            </summary>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Entities.InputNeuron">
+            <summary>
+            Describes base neuron of input layer.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.InputNeuron.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Entities.InputNeuron"/> class.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.InputNeuron.Input">
+            <summary>
+            Gets or sets input synapse.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.InputNeuron.Outputs">
+            <summary>
+            Gets or sets list of output synapses.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.InputNeuron.Clone">
+            <summary>
+            Makes a copy of the neuron.
+            </summary>
+            <returns>neuron copy</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.InputNeuron.Process">
+            <summary>
+            Processes signal through the neuron (multiplies signal by weight).
+            </summary>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Entities.Layer`1">
+            <summary>
+            Describes layer of neural network.
+            </summary>
+            <typeparam name="N">type of layer neurons</typeparam>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.Layer`1.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Entities.Layer`1"/> class with specified 
+            number of neurons.
+            </summary>
+            <param name="neuronsCount">neurons count within the layer</param>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.Layer`1.Neurons">
+            <summary>
+            Gets or sets array of layer neurons.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.Layer`1.Process">
+            <summary>
+            Processes neural net layer (processing of its neurons)
+            </summary>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Entities.OutputNeuron">
+            <summary>
+            Describes base neuron of outpul layer.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.OutputNeuron.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Entities.OutputNeuron"/> class.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.OutputNeuron.Inputs">
+            <summary>
+            Gets or sets list of input synapses.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.OutputNeuron.Output">
+            <summary>
+            Gets or sets output synapse.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.OutputNeuron.Clone">
+            <summary>
+            Makes a copy of the neuron.
+            </summary>
+            <returns>neuron copy</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.OutputNeuron.Process">
+            <summary>
+            Processes input signals through the neuron (just sum of inputs).
+            </summary>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Entities.Synapse">
+            <summary>
+            Represents neuron synapse.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.Synapse.InIndex">
+            <summary>
+            Gets index of neuron in source layer. 
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.Synapse.OutIndex">
+            <summary>
+            Gets index of neuron in target layer. 
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.Synapse.Weight">
+            <summary>
+            Gets or sets synapse weight.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Entities.Synapse.Signal">
+            <summary>
+            Gets or sets input signal.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Entities.Synapse.Clone">
+            <summary>
+            Makes a copy of the synapse with the same pasrameters.
+            </summary>
+            <returns>synapse copy</returns>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Evolution.Crossover">
+            <summary>
+            Represents different crossover techniques for <see cref="T:SciML.NeuralNetwork.Evolution.EvolvingNetBase"/>
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Crossover.RandomCrossover``1(``0,``0)">
+            <summary>
+            Performs crossover of two instances of <see cref="T:SciML.NeuralNetwork.Evolution.EvolvingNetBase"/> using random crossover technique.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet1">neural net instance to crossover</param>
+            <param name="neuralNet2">other neural net instance to crossover</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Crossover.TwoPointsWeightsCrossover``1(``0,``0)">
+            <summary>
+            Crossovers weights of synapses in random range.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet1">neural net instance to crossover</param>
+            <param name="neuralNet2">other neural net instance to crossover</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Crossover.UniformelyDistributedWeightsCrossover``1(``0,``0)">
+            <summary>
+            Crossovers weights of random synapses.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet1">neural net instance to crossover</param>
+            <param name="neuralNet2">other neural net instance to crossover</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Crossover.TwoPointsNeuronsCrossover``1(``0,``0)">
+            <summary>
+            Crossovers neurons in random range.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet1">neural net instance to crossover</param>
+            <param name="neuralNet2">other neural net instance to crossover</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Crossover.UniformelyDistributedNeuronsCrossover``1(``0,``0)">
+            <summary>
+            Crossovers random neurons.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet1">neural net instance to crossover</param>
+            <param name="neuralNet2">other neural net instance to crossover</param>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Evolution.EvolvingNetBase">
+            <summary>
+            Describes neural net with ability to evolve (ability to mutate and crossover).<br/>
+            The net is based on 3-layer network
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetBase.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Evolution.EvolvingNetBase"/> class 
+            with specified count of neurons in each layer.
+            </summary>
+            <param name="inputNeurons">neurons in input layer</param>
+            <param name="hiddenNeurons">neurons in hidden layer</param>
+            <param name="outputNeurons">neurons in output layer</param>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Evolution.EvolvingNetBase.NeuronsCount">
+            <summary>
+            Gets total neural net neurons count.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Evolution.EvolvingNetBase.SynapsesCount">
+            <summary>
+            Gets total count of neural net synapses.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Evolution.EvolvingNetBase.Metadata">
+            <summary>
+            Gets or sets neural net metadata.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetBase.Process">
+            <summary>
+            Processes the neural network (processing of all its layers).
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetBase.Crossover``1(``0)">
+            <summary>
+            Crossovers (randomly) clones of current neural net and retrieved one.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="anotherChromosome">neural net to crossover with current one</param>
+            <returns>list of offsprings</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetBase.Mutate``1">
+            <summary>
+            Mutates (randomly) clone of current neural net.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <returns>mutated instance</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetBase.GetSynapseWeight(System.Int32)">
+            <summary>
+            Gets weight of synapse by its index 
+            (suppose all synapses between layers neurons are linearized into one sequence).
+            </summary>
+            <param name="index">position in linearized sequence</param>
+            <returns>synapse weight value</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetBase.SetSynapseWeight(System.Int32,System.Double)">
+            <summary>
+            Sets weight of synapse by its index 
+            (suppose all synapses between layers neurons are linearized into one sequence).
+            </summary>
+            <param name="index">position in linearized sequence</param>
+            <param name="weight">weight value to set</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SciML.NeuralNetwork.Evolution.EvolvingNetBase.GetNeuron(System.Int32)" -->
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetBase.SetNeuron(System.Int32,SciML.NeuralNetwork.Evolution.EvolvingNeuron)">
+            <summary>
+            Sets neuron at specified position 
+            (suppose all layers neurons are linearized into one sequence [input-hidden-output]).
+            </summary>
+            <param name="index">position in linearized sequence</param>
+            <param name="neuron">neuron to set</param>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Evolution.EvolvingNetLoader">
+            <summary>
+            Contains functionality for <see cref="T:SciML.NeuralNetwork.Evolution.EvolvingNetBase"/> serialization and deserialization using XML.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetLoader.ToFile``1(``0,System.String)">
+            <summary>
+            Serializes neural network to xml file.
+            </summary>
+            <typeparam name="T">neural net type</typeparam>
+            <param name="neuralNet">neural net instance</param>
+            <param name="fileName">file name to serialize to</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNetLoader.FromFile``1(System.String)">
+            <summary>
+            Deserializes neural network from xml file.
+            </summary>
+            <typeparam name="T">neural net type</typeparam>
+            <param name="fileName">file name to deserialize from</param>
+            <returns>instance of neural net</returns>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Evolution.EvolvingNeuron">
+            <summary>
+            Represents neural network neuron with ability to evolve.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNeuron.#ctor(SciML.NeuralNetwork.Evolution.Activation.EvolvingActivationFunctionBase)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Evolution.EvolvingNeuron"/> class based on specified activation function.
+            </summary>
+            <param name="function">neuron activation function</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNeuron.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Evolution.EvolvingNeuron"/> class.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Evolution.EvolvingNeuron.Inputs">
+            <summary>
+            Gets or sets list of input synapses.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Evolution.EvolvingNeuron.Outputs">
+            <summary>
+            Gets or sets list of output synapses.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Evolution.EvolvingNeuron.ActivationFunction">
+            <summary>
+            Gets or sets neuron activation function.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNeuron.Process">
+            <summary>
+            Processes input signals through the neuron (processes all inputs via 
+            activation function and multiplies to weight).
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.EvolvingNeuron.Clone">
+            <summary>
+            Makes a copy of the neuron.
+            </summary>
+            <returns>neuron copy</returns>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Evolution.Mutation">
+            <summary>
+            Represents different mutation techniques for <see cref="T:SciML.NeuralNetwork.Evolution.EvolvingNetBase"/>
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Mutation.RandomMutation``1(``0)">
+            <summary>
+            Mutates instance of <see cref="T:SciML.NeuralNetwork.Evolution.EvolvingNetBase"/> using random mutation technique.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet">neural net instance to mutate</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Mutation.MutateWeights``1(``0)">
+            <summary>
+            Mutates weights of random synapses using random values.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet">neural net instance to mutate</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Mutation.MutateNeuronsFunctionsParams``1(``0)">
+            <summary>
+            Mutates params of activation function for random neurons using random values.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet">neural net instance to mutate</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Mutation.MutateChangeNeuronsFunctions``1(``0)">
+            <summary>
+            Mutates (changes) activation function for random neurons using random values.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet">neural net instance to mutate</param>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Evolution.Mutation.ShuffleWeightsOnSubinterval``1(``0)">
+            <summary>
+            Mutates (shuffles) weights of synapses in random interval.
+            </summary>
+            <typeparam name="T">neural net implementation type</typeparam>
+            <param name="neuralNet">neural net instance to mutate</param>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Networks.NeuralNet2LayerBase`3">
+            <summary>
+            Base for 2-layered neural networks (requires network to be cloneable).
+            </summary>
+            <typeparam name="I">type of input neurons</typeparam>
+            <typeparam name="O">type of output neurons</typeparam>
+            <typeparam name="S">type of synapses</typeparam>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Networks.NeuralNet2LayerBase`3.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Networks.NeuralNet2LayerBase`3"/> class with 
+            specified number of neurons.
+            </summary>
+            <param name="inputNeurons">count of neurons in input layer</param>
+            <param name="outputNeurons">count of neurons in output layer</param>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Networks.NeuralNet2LayerBase`3.InputLayer">
+            <summary>
+            Gets network input layer.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Networks.NeuralNet2LayerBase`3.OutputLayer">
+            <summary>
+            Gets network output layer.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Networks.NeuralNet2LayerBase`3.Connections">
+            <summary>
+            Gets all network synapses.
+            </summary>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Networks.NeuralNet3LayerBase`4">
+            <summary>
+            Base for 3-layered neural networks (requires network to be cloneable).
+            </summary>
+            <typeparam name="I">type of input neurons</typeparam>
+            <typeparam name="H">type of hidden neurons</typeparam>
+            <typeparam name="O">type of output neurons</typeparam>
+            <typeparam name="S">type of synapses</typeparam>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Networks.NeuralNet3LayerBase`4.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SciML.NeuralNetwork.Networks.NeuralNet3LayerBase`4"/> class with 
+            specified number of neurons.
+            </summary>
+            <param name="inputNeurons">count of neurons in input layer</param>
+            <param name="hiddenNeurons">count of neurons in hidden layer</param>
+            <param name="outputNeurons">count of neurons in output layer</param>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Networks.NeuralNet3LayerBase`4.InputLayer">
+            <summary>
+            Gets network input layer.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Networks.NeuralNet3LayerBase`4.HiddenLayer">
+            <summary>
+            Gets network hidden layer.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Networks.NeuralNet3LayerBase`4.OutputLayer">
+            <summary>
+            Gets network output layer.
+            </summary>
+        </member>
+        <member name="P:SciML.NeuralNetwork.Networks.NeuralNet3LayerBase`4.Connections">
+            <summary>
+            Gets all network synapses.
+            </summary>
+        </member>
+        <member name="T:SciML.NeuralNetwork.Networks.NeuralNetBase">
+            <summary>
+            Base for neural networks implementation (requires network to be cloneable).
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Networks.NeuralNetBase.ConstructNetwork">
+            <summary>
+            Constructs neural network by specified logic.
+            </summary>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Networks.NeuralNetBase.Clone">
+            <summary>
+            Clones current neural network.
+            </summary>
+            <returns>neural network copy</returns>
+        </member>
+        <member name="M:SciML.NeuralNetwork.Networks.NeuralNetBase.Process">
+            <summary>
+            Processes the neural network (processing of all its layers).
+            </summary>
+        </member>
+    </members>
+</doc>

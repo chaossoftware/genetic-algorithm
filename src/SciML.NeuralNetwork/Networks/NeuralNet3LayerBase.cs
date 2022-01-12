@@ -1,4 +1,4 @@
-﻿using SciML.NeuralNetwork.Base;
+﻿using SciML.NeuralNetwork.Entities;
 using System.Collections.Generic;
 
 namespace SciML.NeuralNetwork.Networks
@@ -10,16 +10,17 @@ namespace SciML.NeuralNetwork.Networks
     /// <typeparam name="H">type of hidden neurons</typeparam>
     /// <typeparam name="O">type of output neurons</typeparam>
     /// <typeparam name="S">type of synapses</typeparam>
-    public abstract class NN3LayerBase<I, H, O, S> : NeuralNetBase where I : INeuron<I> where H : INeuron<H> where O : INeuron<O> where S : Synapse
+    public abstract class NeuralNet3LayerBase<I, H, O, S> : NeuralNetBase 
+        where I : INeuron<I> where H : INeuron<H> where O : INeuron<O> where S : Synapse
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NN3LayerBase{I, H, O, S}"/> class with 
+        /// Initializes a new instance of the <see cref="NeuralNet3LayerBase{I, H, O, S}"/> class with 
         /// specified number of neurons.
         /// </summary>
         /// <param name="inputNeurons">count of neurons in input layer</param>
         /// <param name="hiddenNeurons">count of neurons in hidden layer</param>
         /// <param name="outputNeurons">count of neurons in output layer</param>
-        protected NN3LayerBase(int inputNeurons, int hiddenNeurons, int outputNeurons)
+        protected NeuralNet3LayerBase(int inputNeurons, int hiddenNeurons, int outputNeurons)
         {
             InputLayer = new Layer<I>(inputNeurons);
             HiddenLayer = new Layer<H>(hiddenNeurons);

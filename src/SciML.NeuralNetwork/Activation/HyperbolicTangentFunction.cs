@@ -2,7 +2,7 @@
 
 namespace SciML.NeuralNetwork.Activation
 {
-    public class HyperbolicTangentFunction : ActivationFunction
+    public class HyperbolicTangentFunction : ActivationFunctionBase
     {
         public override string Name => "Hyperbolic tangent";
 
