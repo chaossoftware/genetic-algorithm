@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net452;netstandard2.0;net5.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Vitaliy Dobriyan</Authors>
     <Company />
@@ -30,6 +30,10 @@
       <PackagePath></PackagePath>
     </None>
     <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\THIRD-PARTY-NOTICES.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

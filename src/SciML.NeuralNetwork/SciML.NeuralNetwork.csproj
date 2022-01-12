@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net452;netstandard2.0;net5.0;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Vitaliy Dobriyan</Authors>
     <Company />
@@ -21,6 +21,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MersenneTwister" Version="1.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\icon.jpg">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -29,10 +33,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MersenneTwister" Version="1.0.6" />
+    <None Include="..\..\THIRD-PARTY-NOTICES.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
