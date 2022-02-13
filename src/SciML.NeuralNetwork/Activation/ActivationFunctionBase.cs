@@ -35,7 +35,11 @@ namespace SciML.NeuralNetwork.Activation
         /// <returns>calculated value</returns>
         public abstract double Dphi(double arg);
 
-        //Returns hyperbolic secant of arg
+        /// <summary>
+        /// Gets hyperbolic secant of argument.
+        /// </summary>
+        /// <param name="arg">input argument</param>
+        /// <returns>value of hyperbolic secant</returns>
         protected double Sech(double arg) =>
             Math.Abs(arg) < 22d ?
             2d / (Math.Exp(arg) + Math.Exp(-arg)) :
