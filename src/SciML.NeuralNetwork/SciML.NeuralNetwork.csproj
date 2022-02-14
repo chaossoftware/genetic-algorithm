@@ -1,16 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard2.0;net5.0;</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard2.0;net5.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Vitaliy Dobriyan</Authors>
     <Company />
-    <Copyright>Copyright © 2021 Vitaliy Dobriyan</Copyright>
+    <Version>1.0.0</Version>
+    <Copyright>Copyright © 2022 Vitaliy Dobriyan</Copyright>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageIconUrl />
     <PackageProjectUrl>https://bitbucket.org/dobriyanchik/sciml</PackageProjectUrl>
-    <PackageIconUrl></PackageIconUrl>
     <RepositoryUrl>https://bitbucket.org/dobriyanchik/sciml.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Description>The package contains base of neural networks, entities and implementation of activation functions.</Description>
     <PackageTags>neural-network machine-learning ml</PackageTags>
     <PackageReleaseNotes>first release: base of neural networking (abstract network, layers and entities). 2 and 3 layer networks base. Neural net base for evolution process.</PackageReleaseNotes>
     <PackageIcon>icon.jpg</PackageIcon>

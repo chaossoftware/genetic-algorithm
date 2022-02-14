@@ -5,14 +5,16 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Vitaliy Dobriyan</Authors>
     <Company />
-    <Copyright>Copyright © 2021 Vitaliy Dobriyan</Copyright>
+    <Version>1.0.0</Version>
+    <Copyright>Copyright © 2022 Vitaliy Dobriyan</Copyright>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <PackageIconUrl></PackageIconUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>genetic-algorithm machine-learning ml</PackageTags>
-    <RepositoryUrl>https://bitbucket.org/dobriyanchik/sciml.git</RepositoryUrl>
-    <PackageReleaseNotes>first release: base of genetic algorithm and evolution engine</PackageReleaseNotes>
+    <PackageIconUrl />
     <PackageProjectUrl>https://bitbucket.org/dobriyanchik/sciml</PackageProjectUrl>
+    <RepositoryUrl>https://bitbucket.org/dobriyanchik/sciml.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Description>The package contains implementation of genetic algorithm variations and related entities.</Description>
+    <PackageTags>genetic-algorithm machine-learning ml</PackageTags>
+    <PackageReleaseNotes>first release: base of genetic algorithm and evolution engine</PackageReleaseNotes>
     <PackageIcon>icon.jpg</PackageIcon>
   </PropertyGroup>
 
