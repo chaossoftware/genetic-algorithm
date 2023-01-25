@@ -1,53 +1,62 @@
 ﻿using SciML.NeuralNetwork.Activation;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace SciML.NeuralNetwork.Entities
+namespace SciML.NeuralNetwork.Entities;
+
+/// <summary>
+/// Describes base neuron of hidden layer with activation function.
+/// </summary>
+public sealed class HiddenNeuron : INeuron<HiddenNeuron>
 {
-    /// <summary>
-    /// Describes base neuron of hidden layer with activation function.
-    /// </summary>
-    public class HiddenNeuron : INeuron<HiddenNeuron>
-    {
-        private readonly ActivationFunctionBase _activationFunction;
+    private readonly IActivationFunction _activationFunction;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HiddenNeuron"/> class 
-        /// with specified activation function.
-        /// </summary>
-        /// <param name="activationFunction">activation function instance</param>
-        public HiddenNeuron(ActivationFunctionBase activationFunction)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="HiddenNeuron"/> class 
+    /// with specified activation function.
+    /// </summary>
+    /// <param name="activationFunction">activation function instance</param>
+    public HiddenNeuron(IActivationFunction activationFunction)
+    {
+        Inputs = new List<Synapse>();
+        Outputs = new List<Synapse>();
+        _activationFunction = activationFunction;
+    }
+
+    /// <summary>
+    /// Gets or sets list of input synapses.
+    /// </summary>
+    public List<Synapse> Inputs { get; set; }
+
+    /// <summary>
+    /// Gets or sets list of output synapses.
+    /// </summary>
+    public List<Synapse> Outputs { get; set; }
+
+    /// <summary>
+    /// Makes a copy of the neuron with the same activation function.
+    /// </summary>
+    /// <returns>neuron copy</returns>
+    public object Clone() =>
+        new HiddenNeuron(_activationFunction);
+
+    /// <summary>
+    /// Processes input signals through the neuron (processes all inputs via 
+    /// activation function and multiplies to weight).
+    /// </summary>
+    public void Process()
+    {
+        double arg = 0;
+
+        for (int i = 0; i < Inputs.Count; i++)
         {
-            Inputs = new List<Synapse>();
-            Outputs = new List<Synapse>();
-            _activationFunction = activationFunction;
+            arg += Inputs[i].Signal;
         }
 
-        /// <summary>
-        /// Gets or sets list of input synapses.
-        /// </summary>
-        public List<Synapse> Inputs { get; set; }
+        arg = _activationFunction.Phi(arg);
 
-        /// <summary>
-        /// Gets or sets list of output synapses.
-        /// </summary>
-        public List<Synapse> Outputs { get; set; }
-
-        /// <summary>
-        /// Makes a copy of the neuron with the same activation function.
-        /// </summary>
-        /// <returns>neuron copy</returns>
-        public virtual object Clone() =>
-            new HiddenNeuron(_activationFunction);
-
-        /// <summary>
-        /// Processes input signals through the neuron (processes all inputs via 
-        /// activation function and multiplies to weight).
-        /// </summary>
-        public virtual void Process()
+        foreach (Synapse synapse in Outputs)
         {
-            double arg = Inputs.Sum(s => s.Signal);
-            Outputs.ForEach(s => s.Signal = s.Weight * _activationFunction.Phi(arg));
+            synapse.Signal = synapse.Weight * arg;
         }
     }
 }

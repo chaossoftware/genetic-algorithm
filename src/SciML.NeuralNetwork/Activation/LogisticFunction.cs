@@ -1,11 +1,10 @@
-﻿namespace SciML.NeuralNetwork.Activation
+﻿namespace SciML.NeuralNetwork.Activation;
+
+public sealed class LogisticFunction : IActivationFunction
 {
-    public class LogisticFunction : ActivationFunctionBase
-    {
-        public override string Name => "Logistic";
+    public string Name => "Logistic";
 
-        public override double Phi(double arg) => arg * (1d - arg);
+    public double Phi(double arg) => arg * (1d - arg);
 
-        public override double Dphi(double arg) => 1d - 2d * arg;
-    }
+    public double Dphi(double arg) => 1d - 2d * arg;
 }

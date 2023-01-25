@@ -10,7 +10,7 @@ namespace SciML.NeuralNetwork.Networks
     /// <typeparam name="H">type of hidden neurons</typeparam>
     /// <typeparam name="O">type of output neurons</typeparam>
     /// <typeparam name="S">type of synapses</typeparam>
-    public abstract class NeuralNet3LayerBase<I, H, O, S> : NeuralNetBase 
+    public abstract class NeuralNet3LayerBase<I, H, O, S> : INeuralNet 
         where I : INeuron<I> where H : INeuron<H> where O : INeuron<O> where S : Synapse
     {
         /// <summary>
@@ -48,5 +48,9 @@ namespace SciML.NeuralNetwork.Networks
         /// Gets all network synapses.
         /// </summary>
         public List<S>[] Connections { get; }
+
+        public abstract void ConstructNetwork();
+
+        public abstract void Process();
     }
 }

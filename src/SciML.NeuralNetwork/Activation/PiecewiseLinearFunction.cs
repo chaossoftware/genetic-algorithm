@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace SciML.NeuralNetwork.Activation
+namespace SciML.NeuralNetwork.Activation;
+
+public sealed class PiecewiseLinearFunction : IActivationFunction
 {
-    public class PiecewiseLinearFunction : ActivationFunctionBase
-    {
-        public override string Name => "Piecewise Linear";
+    public string Name => "Piecewise Linear";
 
-        public override double Phi(double arg) =>
-            Math.Abs(arg) < 1d ? arg : Math.Sign(arg);
+    public double Phi(double arg) =>
+        Math.Abs(arg) < 1d ? arg : Math.Sign(arg);
 
-        public override double Dphi(double arg) =>
-            Math.Abs(arg) < 1d ? 1 : 0;
-    }
+    public double Dphi(double arg) =>
+        Math.Abs(arg) < 1d ? 1 : 0;
 }

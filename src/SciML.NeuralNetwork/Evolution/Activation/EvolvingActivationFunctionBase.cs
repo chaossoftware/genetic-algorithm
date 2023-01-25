@@ -8,7 +8,7 @@ namespace SciML.NeuralNetwork.Evolution.Activation
     /// <summary>
     /// Describes base for activation function of evolving neurtal network.
     /// </summary>
-    public abstract class EvolvingActivationFunctionBase : ActivationFunctionBase, ICloneable
+    public abstract class EvolvingActivationFunctionBase : IActivationFunction, ICloneable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EvolvingActivationFunctionBase"/> class based on 
@@ -24,6 +24,8 @@ namespace SciML.NeuralNetwork.Evolution.Activation
         /// Gets list of activation function parameters.
         /// </summary>
         public List<double> Parameters { get; }
+
+        public abstract string Name { get; }
 
         /// <summary>
         /// Gets random activation function (LinearFunction, SignumFunction, SigmaFunction)
@@ -71,5 +73,9 @@ namespace SciML.NeuralNetwork.Evolution.Activation
         /// </summary>
         /// <returns>activation function copy</returns>
         public abstract object Clone();
+
+        public abstract double Phi(double arg);
+
+        public abstract double Dphi(double arg);
     }
 }

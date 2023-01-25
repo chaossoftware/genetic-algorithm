@@ -1,11 +1,10 @@
-﻿namespace SciML.NeuralNetwork.Activation
+﻿namespace SciML.NeuralNetwork.Activation;
+
+public sealed class LinearFunction : IActivationFunction
 {
-    public class LinearFunction : ActivationFunctionBase
-    {
-        public override string Name => "Linear";
+    public string Name => "Linear";
 
-        public override double Phi(double arg) => arg;
+    public double Phi(double arg) => arg;
 
-        public override double Dphi(double arg) => 2d * arg;
-    }
+    public double Dphi(double arg) => 2d * arg;
 }

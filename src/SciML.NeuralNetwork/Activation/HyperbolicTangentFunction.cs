@@ -1,20 +1,19 @@
 ﻿using System;
 
-namespace SciML.NeuralNetwork.Activation
+namespace SciML.NeuralNetwork.Activation;
+
+public sealed class HyperbolicTangentFunction : IActivationFunction
 {
-    public class HyperbolicTangentFunction : ActivationFunctionBase
+    public string Name => "Hyperbolic tangent";
+
+    public double Phi(double arg) =>
+        arg < 22d ?
+        1d - 2d / (Math.Exp(2d * arg) + 1d) :
+        Math.Sign(arg);
+
+    public double Dphi(double arg)
     {
-        public override string Name => "Hyperbolic tangent";
-
-        public override double Phi(double arg) =>
-            arg < 22d ?
-            1d - 2d / (Math.Exp(2d * arg) + 1d) :
-            Math.Sign(arg);
-
-        public override double Dphi(double arg)
-        {
-            double tmp = Sech(arg);
-            return tmp * tmp;
-        }
+        double tmp = MathExt.Sech(arg);
+        return tmp * tmp;
     }
 }

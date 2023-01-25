@@ -1,11 +1,10 @@
-﻿namespace SciML.NeuralNetwork.Activation
+﻿namespace SciML.NeuralNetwork.Activation;
+
+public sealed class GaussianFunction : IActivationFunction
 {
-    public class GaussianFunction : ActivationFunctionBase
-    {
-        public override string Name => "Gaussian";
+    public string Name => "Gaussian";
 
-        public override double Phi(double arg) => arg * (1d - arg);
+    public double Phi(double arg) => arg * (1d - arg);
 
-        public override double Dphi(double arg) => 1d - 2d * arg;
-    }
+    public double Dphi(double arg) => 1d - 2d * arg;
 }

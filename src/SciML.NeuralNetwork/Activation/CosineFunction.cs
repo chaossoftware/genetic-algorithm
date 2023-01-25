@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace SciML.NeuralNetwork.Activation
+namespace SciML.NeuralNetwork.Activation;
+
+public sealed class CosineFunction : IActivationFunction
 {
-    public class CosineFunction : ActivationFunctionBase
-    {
-        public override string Name => "Cosine";
+    public string Name => "Cosine";
 
-        public override double Phi(double arg) => Math.Cos(arg);
+    public double Phi(double arg) => Math.Cos(arg);
 
-        public override double Dphi(double arg) => Math.Cos(arg);
-    }
+    public double Dphi(double arg) => Math.Cos(arg);
 }

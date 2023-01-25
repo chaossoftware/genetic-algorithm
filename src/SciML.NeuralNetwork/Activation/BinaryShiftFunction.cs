@@ -1,11 +1,10 @@
-﻿namespace SciML.NeuralNetwork.Activation
+﻿namespace SciML.NeuralNetwork.Activation;
+
+public sealed class BinaryShiftFunction : IActivationFunction
 {
-    public class BinaryShiftFunction : ActivationFunctionBase
-    {
-        public override string Name => "Binary shift";
+    public string Name => "Binary shift";
 
-        public override double Phi(double arg) => arg % 1d;
+    public double Phi(double arg) => arg % 1d;
 
-        public override double Dphi(double arg) => 1d;
-    }
+    public double Dphi(double arg) => 1d;
 }

@@ -1,5 +1,6 @@
 ﻿using SciML.NeuralNetwork.Entities;
 using SciML.NeuralNetwork.Networks;
+using System;
 using System.Collections.Generic;
 
 namespace SciML.NeuralNetwork.Evolution
@@ -8,7 +9,7 @@ namespace SciML.NeuralNetwork.Evolution
     /// Describes neural net with ability to evolve (ability to mutate and crossover).<br/>
     /// The net is based on 3-layer network
     /// </summary>
-    public abstract class EvolvingNetBase : NeuralNet3LayerBase<EvolvingNeuron, EvolvingNeuron, EvolvingNeuron, Synapse>
+    public abstract class EvolvingNetBase : NeuralNet3LayerBase<EvolvingNeuron, EvolvingNeuron, EvolvingNeuron, Synapse>, ICloneable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EvolvingNetBase"/> class 
@@ -172,5 +173,7 @@ namespace SciML.NeuralNetwork.Evolution
                 OutputLayer.Neurons[index - inputs - hidden] = neuron;
             }
         }
+
+        public abstract object Clone();
     }
 }

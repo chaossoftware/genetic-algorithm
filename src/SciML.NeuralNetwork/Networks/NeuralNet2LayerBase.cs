@@ -9,7 +9,7 @@ namespace SciML.NeuralNetwork.Networks
     /// <typeparam name="I">type of input neurons</typeparam>
     /// <typeparam name="O">type of output neurons</typeparam>
     /// <typeparam name="S">type of synapses</typeparam>
-    public abstract class NeuralNet2LayerBase<I, O, S> : NeuralNetBase 
+    public abstract class NeuralNet2LayerBase<I, O, S> : INeuralNet 
         where I : INeuron<I> where O : INeuron<O> where S : Synapse
     {
         /// <summary>
@@ -40,5 +40,9 @@ namespace SciML.NeuralNetwork.Networks
         /// Gets all network synapses.
         /// </summary>
         public List<S> Connections { get; }
+
+        public abstract void ConstructNetwork();
+
+        public abstract void Process();
     }
 }

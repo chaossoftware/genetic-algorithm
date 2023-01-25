@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace SciML.NeuralNetwork.Activation
+namespace SciML.NeuralNetwork.Activation;
+
+public sealed class GaussianDerivativeFunction : IActivationFunction
 {
-    public class GaussianDerivativeFunction : ActivationFunctionBase
-    {
-        public override string Name => "Gaussian Derivative";
+    public string Name => "Gaussian Derivative";
 
-        public override double Phi(double arg) => -arg * Math.Exp(-arg * arg);
+    public double Phi(double arg) => -arg * Math.Exp(-arg * arg);
 
-        public override double Dphi(double arg) => (2d * arg - 1d) * Math.Exp(-arg * arg);
-    }
+    public double Dphi(double arg) => (2d * arg - 1d) * Math.Exp(-arg * arg);
 }
