@@ -1,4 +1,4 @@
-﻿namespace SciML.GeneticAlgorithm.Evolution
+﻿namespace ChaosSoft.GeneticAlgorithm.Evolution
 {
     /// <summary>
     /// Wrapper over <see cref="IChromosome{C}"/> with population model parameters.

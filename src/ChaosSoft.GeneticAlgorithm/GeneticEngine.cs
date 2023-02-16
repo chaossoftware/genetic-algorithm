@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SciML.GeneticAlgorithm
+namespace ChaosSoft.GeneticAlgorithm
 {
     /// <summary>
     /// Genetic engine has defined initial population, fitness function and evolution params.<br/>

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SciML.GeneticAlgorithm.Evolution
+namespace ChaosSoft.GeneticAlgorithm.Evolution
 {
     /// <summary>
     /// Simulation of a population evolution/growth considering population model.<br/>

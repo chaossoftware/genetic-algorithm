@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SciML.GeneticAlgorithm
+namespace ChaosSoft.GeneticAlgorithm
 {
     /// <summary>
     /// Interface for genetic algorithm chromosomes with basic operations.

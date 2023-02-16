@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SciML.GeneticAlgorithm
+namespace ChaosSoft.GeneticAlgorithm
 {
     /// <summary>
     /// Interface for fitness functions to determine best chromosomes in population.

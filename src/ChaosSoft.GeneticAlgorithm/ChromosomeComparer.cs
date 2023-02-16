@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SciML.GeneticAlgorithm
+namespace ChaosSoft.GeneticAlgorithm
 {
     internal class ChromosomeComparer<C, T> : IComparer<C> where C : IChromosome<C> where T : IComparable<T>
     {

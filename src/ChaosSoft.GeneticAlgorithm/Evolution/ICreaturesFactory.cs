@@ -1,4 +1,4 @@
-﻿namespace SciML.GeneticAlgorithm.Evolution
+﻿namespace ChaosSoft.GeneticAlgorithm.Evolution
 {
     /// <summary>
     /// Interface for creatures factories.

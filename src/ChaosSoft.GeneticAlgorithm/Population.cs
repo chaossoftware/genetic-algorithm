@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SciML.GeneticAlgorithm
+namespace ChaosSoft.GeneticAlgorithm
 {
     /// <summary>
     /// Represents a population of chromosomes

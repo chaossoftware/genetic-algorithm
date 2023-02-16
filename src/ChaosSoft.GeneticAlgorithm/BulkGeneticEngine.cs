@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SciML.GeneticAlgorithm
+namespace ChaosSoft.GeneticAlgorithm
 {
     /// <summary>
     /// Wrapper over <see cref="GeneticEngine{C, T}"/> to perform iterative evolution process
