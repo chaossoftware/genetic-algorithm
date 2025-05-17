@@ -1,5 +1,4 @@
-﻿using MersenneTwister;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +8,10 @@ namespace ChaosSoft.GeneticAlgorithm;
 /// <summary>
 /// Represents a population of chromosomes
 /// </summary>
-/// <typeparam name="C">cromosome type</typeparam>
+/// <typeparam name="C">chromosome type</typeparam>
 public class Population<C> : IEnumerable<C> where C : IChromosome<C>
 {
     private const int DefaultChromosomesCount = 32;
-
-    private readonly Random _random = Randoms.FastestInt32;
 
     private List<C> chromosomes = new List<C>(DefaultChromosomesCount);
 
@@ -31,11 +28,11 @@ public class Population<C> : IEnumerable<C> where C : IChromosome<C>
         chromosomes.Add(chromosome);
 
     /// <summary>
-    /// Gets chromosime with random index based on <see cref="Random"/>
+    /// Gets chromosome with random index based on <see cref="Random"/>
     /// </summary>
     /// <returns>chromosome instance</returns>
     public C GetRandomChromosome() =>
-        chromosomes[_random.Next(Size)];
+        chromosomes[ThreadSafeXorShift.Instance.NextInt(Size)];
 
     /// <summary>
     /// Gets chromosome with specified index
@@ -46,7 +43,7 @@ public class Population<C> : IEnumerable<C> where C : IChromosome<C>
         chromosomes[index];
 
     /// <summary>
-    /// Removes specified chromosome from chromosomos list
+    /// Removes specified chromosome from chromosomes list
     /// </summary>
     /// <param name="chromosome">chromosome instance</param>
     public void RemoveChromosome(C chromosome) =>
@@ -56,9 +53,12 @@ public class Population<C> : IEnumerable<C> where C : IChromosome<C>
     /// Sorts list of existing chromosomes using specified comparator
     /// </summary>
     /// <param name="chromosomesComparator">chromosome custom comparator</param>
-    public void SortByFitness(IComparer<C> chromosomesComparator) =>
+    public void SortByFitness(IComparer<C> chromosomesComparator)
+    {
+        chromosomes.Shuffle();
         chromosomes.Sort(chromosomesComparator);
-
+    }
+        
     /// <summary>
     /// Shortens the population till specific length
     /// </summary>
