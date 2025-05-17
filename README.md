@@ -7,7 +7,6 @@ Entities:
 * Interface for chromosomes
 
 Engines:
-* GeneticEngine (single step evolution)
-* BulkGeneticEngine (multiple steps evolution)
+* GeneticEngine (single and multiple steps evolution)
 
 Base of evolution engine
