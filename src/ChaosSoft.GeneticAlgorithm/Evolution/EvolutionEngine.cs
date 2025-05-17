@@ -1,5 +1,4 @@
-﻿using MersenneTwister;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ChaosSoft.GeneticAlgorithm.Evolution;
@@ -25,7 +24,7 @@ namespace ChaosSoft.GeneticAlgorithm.Evolution;
 /// <typeparam name="T">fitness measure type</typeparam>
 public class EvolutionEngine<C, T> : GeneticEngine<C, T> where C : ICreature<C> where T : IComparable<T>
 {
-    private readonly Random _probabilityGenerator;
+    private readonly ThreadSafeXorShift _probabilityGenerator;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EvolutionEngine{C, T}"/> class 
@@ -36,7 +35,7 @@ public class EvolutionEngine<C, T> : GeneticEngine<C, T> where C : ICreature<C> 
     public EvolutionEngine(Population<C> population, IFitness<C, T> fitnessFunc)
         : base(population, fitnessFunc)
     {
-        _probabilityGenerator = Randoms.FastestDouble;
+        _probabilityGenerator = ThreadSafeXorShift.Instance;
     }
 
     /// <summary>

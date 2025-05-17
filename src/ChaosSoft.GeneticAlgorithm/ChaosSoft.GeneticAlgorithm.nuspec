@@ -4,9 +4,9 @@
     <id>ChaosSoft.GeneticAlgorithm</id>
     <version>$version$</version>
     <title>ChaosSoft.GeneticAlgorithm</title>
-    <authors>Vitaliy Dobriyan</authors>
+    <authors>Vitalii Dobriian</authors>
     <license type="expression">Apache-2.0</license>
-    <copyright>Copyright (c) Vitaliy Dobriyan 2023</copyright>
+    <copyright>Copyright (c) Vitalii Dobriian 2025</copyright>
     <projectUrl>https://github.com/chaossoftware/genetic-algorithm</projectUrl>
     <repository type="git" url="https://github.com/chaossoftware/genetic-algorithm.git"/>
     <icon>images\icon.png</icon>
@@ -15,24 +15,17 @@
     <description>
       The package contains implementation of genetic algorithm variations and related entities.
     </description>
-    <releaseNotes>first release: base of genetic algorithm and evolution engine</releaseNotes>
+    <releaseNotes>https://github.com/chaossoftware/genetic-algorithm/releases</releaseNotes>
     <tags>genetic-algorithm machine-learning ml</tags>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="MersenneTwister" version="1.0.6"/>
-      </group>
-      <group targetFramework="net6.0">
-        <dependency id="MersenneTwister" version="1.0.6"/>
       </group>
     </dependencies>
   </metadata>
   <files>
     <file src="..\..\README.md" target="docs\" />
-    <file src="..\..\THIRD-PARTY-NOTICES.txt" target="content\" />
     <file src="..\..\icon.png" target="images\" />
     <file src="bin\Release\netstandard2.0\chaossoft.geneticalgorithm.dll" target="lib\netstandard2.0" />
     <file src="bin\Release\netstandard2.0\chaossoft.geneticalgorithm.xml" target="lib\netstandard2.0" />
-    <file src="bin\Release\net6.0\chaossoft.geneticalgorithm.dll" target="lib\net6.0" />
-    <file src="bin\Release\net6.0\chaossoft.geneticalgorithm.xml" target="lib\net6.0" />
   </files>
 </package>
